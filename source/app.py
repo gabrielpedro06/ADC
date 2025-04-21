@@ -27,15 +27,15 @@ def main():
     funcionarios, departamentos = carregar_dados()
     
     # Efetuar login
-    usuario, papel = login(funcionarios)
+    utilizador, papel = login(funcionarios)
     
     # Chamar o menu correspondente de acordo com o papel
     if papel == 'admin':
         menu_admin(funcionarios, departamentos)
     elif papel == 'funcionario':
-        menu_funcionario(funcionarios, usuario)
+        menu_funcionario(funcionarios, utilizador)
     elif papel == 'gestor':
-        menu_gestor(departamentos, funcionarios, usuario)
+        menu_gestor(departamentos, funcionarios, utilizador)
     else:
         print("Acesso negado!")
 

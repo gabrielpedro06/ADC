@@ -1,22 +1,25 @@
+import funcoes as f
+from funcionarios import Funcionario
 def menu_admin(funcionarios, departamentos):
     # Menu de administração
     while True:
-        print("\nMenu de Administração")
-        print("1) Criar Funcionário")
-        print("2) Editar Funcionário")
-        print("3) Remover Funcionário")
-        print("4) Criar Departamento")
-        print("5) Editar Departamento")
-        print("6) Remover Departamento")
-        print("7) Sair")
+        print("\n == Menu de Administração ==")
+        print("                              ")
+        print("|  1 - Criar Funcionário     |")
+        print("|  2 - Editar Funcionário    |")
+        print("|  3 - Remover Funcionário   |")
+        print("|  4 - Criar Departamento    |")
+        print("|  5 - Editar Departamento   |")
+        print("|  6 - Remover Departamento  |")
+        print("|  7 - Sair                  |")
         opcao = input("Escolha uma opção: ")
         
         if opcao == "1":
             # Criar novo funcionário
-            pass  # Implementar criação de funcionário
+            f.criar_funcionario()
         elif opcao == "2":
             # Editar funcionário
-            pass  # Implementar edição de funcionário
+            Funcionario.editar_dados()
         elif opcao == "3":
             # Remover funcionário
             pass  # Implementar remoção de funcionário
@@ -37,13 +40,14 @@ def menu_admin(funcionarios, departamentos):
 def menu_funcionario(funcionarios, user):
     # Menu do funcionário
     while True:
-        print(f"\nMenu de Funcionário - {user['nome']}")
-        print("1) Editar Dados Pessoais")
-        print("2) Consultar Férias")
-        print("3) Consultar Faltas")
-        print("4) Consultar Salário")
-        print("5) Consultar Folgas")
-        print("6) Sair")
+        print(f"\n == Menu de Funcionário - {user['nome']} == ")
+        print("                               ")
+        print("|  1 - Editar Dados Pessoais  |")
+        print("|  2 - Consultar Férias       |")
+        print("|  3 - Consultar Faltas       |")
+        print("|  4 - Consultar Salário      |")
+        print("|  5 - Consultar Folgas       |")
+        print("|  6 - Sair                   |")
         opcao = input("Escolha uma opção: ")
         
         if opcao == "1":
@@ -64,11 +68,12 @@ def menu_funcionario(funcionarios, user):
 def menu_gestor(departamentos, funcionarios, user):
     # Menu do gestor
     while True:
-        print(f"\nMenu de Gestor - {user['nome']}")
-        print("1) Consultar Funcionários")
-        print("2) Atribuir Funcionário a Departamento")
-        print("3) Remover Funcionário de Departamento")
-        print("4) Sair")
+        print(f"\n == Menu de Gestor - {user['nome']} == ")
+        print("                                             ")
+        print("|  1 - Consultar Funcionários               |")
+        print("|  2 - Atribuir Funcionário a Departamento  |")
+        print("|  3 - Remover Funcionário de Departamento  |")
+        print("|  4 - Sair                                 |")
         opcao = input("Escolha uma opção: ")
         
         if opcao == "1":

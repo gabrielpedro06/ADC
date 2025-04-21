@@ -1,0 +1,2 @@
+# Ignorar ficheiros cache do python.
+source/__pycache__/*.pyc

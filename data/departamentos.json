@@ -1,13 +1,15 @@
 [
     {
         "id": 1,
-        "nome": "TI",
+        "nome": "Tecnlogias da Informação",
+        "sigla": "TI",
         "gestor": "Carlos Gomes",
         "funcionarios": [1]
     },
     {
         "id": 2,
-        "nome": "RH",
+        "nome": "Recursos Humanos",
+        "sigla": "RH",
         "gestor": "Ana Souza",
         "funcionarios": [2]
     }

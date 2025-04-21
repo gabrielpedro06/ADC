@@ -1,6 +1,7 @@
 [
     {
         "id": 1,
+        "id_departamento": 1,
         "nome": "João Silva",
         "morada": "Rua X, 123",
         "telemovel": "912345678",
@@ -16,6 +17,7 @@
     },
     {
         "id": 2,
+        "id_departamento": 2,
         "nome": "Maria Fernandes",
         "morada": "Avenida Y, 456",
         "telemovel": "913456789",
