@@ -4,21 +4,22 @@ class Funcionario:
     def __init__(self, dados):
         self.id = dados[0]
         self.id_departamento = dados[1]
-        self.nome = dados[2]
-        self.morada = dados[3]
-        self.telemovel = dados[4]
-        self.nif = dados[5]
-        self.sexo = dados[6]
-        self.iban = dados[7]
-        self.doencas = dados[8]
-        self.ferias = dados[9]
-        self.faltas = dados[10]
-        self.salario = dados[11]
-        self.horario = dados[12]
-        self.folgas = dados[13]
+        self.funcao = dados[2]
+        self.nome = dados[3]
+        self.morada = dados[4]
+        self.telemovel = dados[5]
+        self.nif = dados[6]
+        self.sexo = dados[7]
+        self.iban = dados[8]
+        self.doencas = dados[9]
+        self.ferias = dados[10]
+        self.faltas = dados[11]
+        self.salario = dados[12]
+        self.horario = dados[13]
+        self.folgas = dados[14]
     
     def __str__(self):
-        return f"""Funcionário {self.nome} (ID: {self.id}) - Departamento: {self.id_departamento}\nMorada: {self.morada} - Telemóvel: {self.telemovel}
+        return f"""Funcionário {self.nome} (ID: {self.id}) - Departamento: {self.id_departamento} - Função {self.funcao}\nMorada: {self.morada} - Telemóvel: {self.telemovel}
 NIF: {self.nif} - IBAN: {self.iban} - Salário: {self.salario}€
 Sexo: {self.sexo} - Doenças: {self.doencas}
 Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} - Folgas: {self.folgas}
@@ -34,6 +35,11 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
     def id_departamento(self): return self._id_departamento
     @id_departamento.setter
     def id_departamento(self, value): self._id_departamento = value
+    
+    @property
+    def funcao(self): return self._funcao
+    @funcao.setter
+    def funcao(self, value): self._funcao = value
     
     @property
     def nome(self): return self._nome
@@ -107,6 +113,7 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         funcionario = {
             "id": self._id,
             "id_departamento": self._id_departamento,
+            "funcao": self._funcao,
             "nome": self._nome,
             "morada": self._morada,
             "telemovel": self._telemovel,
@@ -130,6 +137,7 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
     def editar_dados(self):
         print("Editar Dados Pessoais")
         
+        self._funcao = input(f"Função (atual: {self._funcao}): ") or self._funcao
         self._nome = input(f"Nome (atual: {self._nome}): ") or self._nome
         self._morada = input(f"Morada (atual: {self._morada}): ") or self._morada
         self._telemovel = input(f"Telemóvel (atual: {self._telemovel}): ") or self._telemovel
@@ -182,6 +190,7 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
                 funcionarios[i] = {
                     "id": self._id,
                     "id_departamento": self._id_departamento,
+                    "funcao": self._funcao,
                     "nome": self._nome,
                     "morada": self._morada,
                     "telemovel": self._telemovel,

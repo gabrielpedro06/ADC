@@ -20,6 +20,7 @@ def criar_funcionario():
     # Criar novo funcionário
       
     nome = input("Insira o nome: ")
+    funcao = input("Insira a função (Funcionário/Gestor/Admin): ")
     morada = input("Insira a morada: ")
     telemovel = input("Insira o telemóvel: ")
     test_nif_telemovel(telemovel)
@@ -62,7 +63,7 @@ def criar_funcionario():
             print("Departamento não encontrado!")
             
     faltas = {"justificadas": 0, "injustificadas": 0}
-    dados = [id, id_departamento, nome, morada, telemovel, nif, sexo, iban_completo, doencas, ferias, faltas, salario, horario, folgas]
+    dados = [id, id_departamento, funcao, nome, morada, telemovel, nif, sexo, iban_completo, doencas, ferias, faltas, salario, horario, folgas]
     funcionario = Funcionario(dados)
     funcionario.colocar_funcionario()
     funcionario.__str__()

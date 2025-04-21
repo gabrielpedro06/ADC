@@ -1,7 +1,7 @@
 import funcoes as f
 from funcionarios import Funcionario
 
-def menu_admin(funcionarios, departamentos):
+def menu_admin():
     # Menu de administração
     while True:
         print("\n == Menu de Administração ==")
@@ -44,8 +44,12 @@ def menu_admin(funcionarios, departamentos):
 
 def menu_funcionario(funcionarios, utilizador):
     # Menu do funcionário
+    for funcionario in funcionarios:
+        if funcionario["id"] == utilizador:
+            nome = funcionario["nome"]
+            
     while True:
-        print(f"\n == Menu de Funcionário - {utilizador.nome} == ")
+        print(f"\n == Menu de Funcionário - {nome} == ")
         print("                               ")
         print("|  1 - Editar Dados Pessoais  |")
         print("|  2 - Consultar Férias       |")
@@ -71,9 +75,17 @@ def menu_funcionario(funcionarios, utilizador):
             print("Opção inválida!")
 
 def menu_gestor(departamentos, funcionarios, utilizador):
+    for funcionario in funcionarios:
+        if funcionario["id"] == utilizador:
+            nome = funcionario["nome"]
+            departamento = funcionario["id_departamento"]
+            
+    for d in departamentos:
+        if d["id"] == departamento:
+            nome_departamento = d["nome"]
     # Menu do gestor
     while True:
-        print(f"\n == Menu de Gestor - {utilizador.nome} == ")
+        print(f"\n == Menu de Gestor - {nome} | {nome_departamento} == ")
         print("                                             ")
         print("|  1 - Consultar Funcionários               |")
         print("|  2 - Atribuir Funcionário a Departamento  |")
