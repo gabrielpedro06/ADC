@@ -1,5 +1,6 @@
 import funcoes as f
 from funcionarios import Funcionario
+
 def menu_admin(funcionarios, departamentos):
     # Menu de administração
     while True:
@@ -7,40 +8,44 @@ def menu_admin(funcionarios, departamentos):
         print("                              ")
         print("|  1 - Criar Funcionário     |")
         print("|  2 - Editar Funcionário    |")
-        print("|  3 - Remover Funcionário   |")
-        print("|  4 - Criar Departamento    |")
-        print("|  5 - Editar Departamento   |")
-        print("|  6 - Remover Departamento  |")
-        print("|  7 - Sair                  |")
+        print("|  3 - Listar Funcionário    |")
+        print("|  4 - Remover Funcionário   |")
+        print("|  5 - Criar Departamento    |")
+        print("|  6 - Editar Departamento   |")
+        print("|  7 - Listar Departamento   |")
+        print("|  8 - Remover Departamento  |")
+        print("|  9 - Sair                  |")
         opcao = input("Escolha uma opção: ")
         
         if opcao == "1":
-            # Criar novo funcionário
             f.criar_funcionario()
         elif opcao == "2":
-            # Editar funcionário
-            Funcionario.editar_dados()
+            f.listar_funcionarios()
+            f.editar_funcionario()
         elif opcao == "3":
-            # Remover funcionário
-            pass  # Implementar remoção de funcionário
+            f.listar_funcionarios()
         elif opcao == "4":
-            # Criar novo departamento
-            pass  # Implementar criação de departamento
+            f.listar_funcionarios()
+            f.remover_funcionario()
         elif opcao == "5":
-            # Editar departamento
-            pass  # Implementar edição de departamento
+            f.criar_departamento()
         elif opcao == "6":
-            # Remover departamento
-            pass  # Implementar remoção de departamento
+            f.listar_departamentos()
+            f.editar_departamento()
         elif opcao == "7":
+            f.listar_departamentos()
+        elif opcao == "8":
+            f.listar_departamentos()
+            f.remover_departamento()
+        elif opcao == "9":
             break
         else:
             print("Opção inválida!")
 
-def menu_funcionario(funcionarios, user):
+def menu_funcionario(funcionarios, utilizador):
     # Menu do funcionário
     while True:
-        print(f"\n == Menu de Funcionário - {user['nome']} == ")
+        print(f"\n == Menu de Funcionário - {utilizador.nome} == ")
         print("                               ")
         print("|  1 - Editar Dados Pessoais  |")
         print("|  2 - Consultar Férias       |")
@@ -51,24 +56,24 @@ def menu_funcionario(funcionarios, user):
         opcao = input("Escolha uma opção: ")
         
         if opcao == "1":
-            user.editar_dados()
+            Funcionario.editar_dados()
         elif opcao == "2":
-            user.consultar_ferias()
+            Funcionario.consultar_ferias()
         elif opcao == "3":
-            user.consultar_faltas()
+            Funcionario.consultar_faltas()
         elif opcao == "4":
-            user.consultar_salario()
+            Funcionario.consultar_salario()
         elif opcao == "5":
-            user.consultar_folgas()
+            Funcionario.consultar_folgas()
         elif opcao == "6":
             break
         else:
             print("Opção inválida!")
 
-def menu_gestor(departamentos, funcionarios, user):
+def menu_gestor(departamentos, funcionarios, utilizador):
     # Menu do gestor
     while True:
-        print(f"\n == Menu de Gestor - {user['nome']} == ")
+        print(f"\n == Menu de Gestor - {utilizador.nome} == ")
         print("                                             ")
         print("|  1 - Consultar Funcionários               |")
         print("|  2 - Atribuir Funcionário a Departamento  |")
@@ -77,14 +82,11 @@ def menu_gestor(departamentos, funcionarios, user):
         opcao = input("Escolha uma opção: ")
         
         if opcao == "1":
-            # Consultar funcionários do departamento
-            pass  # Consultar funcionários
+            f.consultar_funcionarios_departamento(utilizador.departamento)
         elif opcao == "2":
-            # Atribuir funcionário a departamento
-            pass  # Atribuir funcionário
+            f.atribuir_funcionario_departamento()
         elif opcao == "3":
-            # Remover funcionário de departamento
-            pass  # Remover funcionário
+            f.remover_funcionario_departamento()
         elif opcao == "4":
             break
         else:
