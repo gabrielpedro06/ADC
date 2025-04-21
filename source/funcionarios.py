@@ -99,7 +99,7 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
     
     def colocar_funcionario(self):
         try:
-            with open('data/funcionarios.json', 'r', encoding="utf-8") as f:
+            with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
                 funcionarios = json.load(f)
         except FileNotFoundError:
             funcionarios = []
@@ -122,7 +122,7 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         }
         funcionarios.append(funcionario)
 
-        with open('data/funcionarios.json', 'w', encoding="utf-8") as f:
+        with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
             json.dump(funcionarios, f, indent=4)
 
         print("Funcionário adicionado com sucesso!")
@@ -171,7 +171,7 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
 
     def guardar_alteracoes(self):
         try:
-            with open('data/funcionarios.json', 'r', encoding="utf-8") as f:
+            with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
                 funcionarios = json.load(f)
         except FileNotFoundError:
             print("Ficheiro de funcionários não encontrado.")
@@ -197,7 +197,7 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
                 }
                 break
 
-        with open('data/funcionarios.json', 'w', encoding="utf-8") as f:
+        with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
             json.dump(funcionarios, f, indent=4)
 
         print("Alterações guardadas com sucesso.")
@@ -241,7 +241,7 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
 
     def remover_funcionario(self):
         try:
-            with open('data/funcionarios.json', 'r', encoding="utf-8") as f:
+            with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
                 funcionarios = json.load(f)
         except FileNotFoundError:
             print("Ficheiro não encontrado.")
@@ -249,7 +249,7 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
 
         funcionarios = [f for f in funcionarios if f["id"] != self._id]
 
-        with open('data/funcionarios.json', 'w', encoding="utf-8") as f:
+        with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
             json.dump(funcionarios, f, indent=4)
 
         print(f"Funcionário {self._id} removido com sucesso.")

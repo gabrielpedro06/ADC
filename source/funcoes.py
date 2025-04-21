@@ -44,11 +44,11 @@ def criar_funcionario():
     horario = input("Insira o horário (inicioH - fimH): ")
     folgas = input("Insira os dias de folgas (separados por vírgula): ")
     
-    with open('data/funcionarios.json', 'r', encoding="utf-8") as arquivo_funcionarios:
+    with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as arquivo_funcionarios:
         funcionarios = json.load(arquivo_funcionarios)
         id = max(funcionario['id'] for funcionario in funcionarios) + 1
     
-    with open('data/departamentos.json', 'r', encoding="utf-8") as arquivo_departamentos:
+    with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as arquivo_departamentos:
         departamentos = json.load(arquivo_departamentos)
         input_sigla = input("Insira a sigla do departamento: ").upper()
         id_departamento = 0
@@ -68,7 +68,7 @@ def criar_funcionario():
     funcionario.__str__()
     
 def editar_funcionario():
-    with open('data/funcionarios.json', 'r', encoding="utf-8") as f:
+    with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
         funcionarios = json.load(f)
 
     id_func = int(input("ID do funcionário a editar: "))
@@ -105,14 +105,14 @@ def editar_funcionario():
         'folgas': folgas
     })
 
-    with open('data/funcionarios.json', 'w', encoding="utf-8") as f:
+    with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
         json.dump(funcionarios, f, indent=4)
     print("Funcionário atualizado com sucesso.")
     
 def remover_funcionario():
     # Lê o arquivo de funcionários
     try:
-        with open('data/funcionarios.json', 'r', encoding="utf-8") as f:
+        with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
             funcionarios = json.load(f)
     except FileNotFoundError:
         print("O arquivo de funcionários não foi encontrado.")
@@ -135,7 +135,7 @@ def remover_funcionario():
     funcionarios = [f for f in funcionarios if f['id'] != id_func]
 
     # Atualiza o arquivo de funcionários
-    with open('data/funcionarios.json', 'w', encoding="utf-8") as f:
+    with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
         json.dump(funcionarios, f, indent=4)
     
     print(f"Funcionário com ID {id_func} removido com sucesso.")
@@ -143,7 +143,7 @@ def remover_funcionario():
     
 def listar_funcionarios():
     try:
-        with open('data/funcionarios.json', 'r', encoding="utf-8") as f:
+        with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
             funcionarios = json.load(f)
 
         # Verifica se há funcionários para listar
@@ -163,7 +163,7 @@ def criar_departamento():
     nome = input("Nome do novo departamento: ")
     sigla = input("Sigla (ex: INF): ").upper()
 
-    with open('data/departamentos.json', 'r', encoding="utf-8") as f:
+    with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as f:
         departamentos = json.load(f)
 
     novo_id = max(d['id'] for d in departamentos) + 1 if departamentos else 1
@@ -175,7 +175,7 @@ def criar_departamento():
 
     departamentos.append(novo_departamento)
 
-    with open('data/departamentos.json', 'w', encoding="utf-8") as f:
+    with open('ADC/data/departamentos.json', 'w', encoding="utf-8") as f:
         json.dump(departamentos, f, indent=4)
 
     print(f"Departamento '{nome}' criado com sucesso.")
@@ -183,7 +183,7 @@ def criar_departamento():
 def remover_departamento():
     sigla = input("Sigla do departamento a remover: ").upper()
 
-    with open('data/departamentos.json', 'r', encoding="utf-8") as f:
+    with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as f:
         departamentos = json.load(f)
 
     novo_lista = [d for d in departamentos if d['sigla'] != sigla]
@@ -191,14 +191,14 @@ def remover_departamento():
     if len(novo_lista) == len(departamentos):
         print("Departamento não encontrado.")
     else:
-        with open('data/departamentos.json', 'w', encoding="utf-8") as f:
+        with open('ADC/data/departamentos.json', 'w', encoding="utf-8") as f:
             json.dump(novo_lista, f, indent=4)
         print(f"Departamento com sigla '{sigla}' removido.")
 
 def editar_departamento():
     sigla = input("Sigla do departamento a editar: ").upper()
 
-    with open('data/departamentos.json', 'r', encoding="utf-8") as f:
+    with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as f:
         departamentos = json.load(f)
 
     for d in departamentos:
@@ -211,7 +211,7 @@ def editar_departamento():
                 "sigla": nova_sigla
             })
 
-            with open('data/departamentos.json', 'w', encoding="utf-8") as f:
+            with open('ADC/data/departamentos.json', 'w', encoding="utf-8") as f:
                 json.dump(departamentos, f, indent=4)
             print("Departamento atualizado com sucesso.")
             return
@@ -220,7 +220,7 @@ def editar_departamento():
 
 def listar_departamentos():
     try:
-        with open('data/departamentos.json', 'r', encoding="utf-8") as f:
+        with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as f:
             departamentos = json.load(f)
 
         # Verifica se há departamentos para listar
