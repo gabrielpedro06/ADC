@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "nome": "TI",
+        "gestor": "Carlos Gomes",
+        "funcionarios": [1]
+    },
+    {
+        "id": 2,
+        "nome": "RH",
+        "gestor": "Ana Souza",
+        "funcionarios": [2]
+    }
+]

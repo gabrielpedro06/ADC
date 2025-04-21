@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "nome": "João Silva",
+        "morada": "Rua X, 123",
+        "telemovel": "912345678",
+        "nif": "123456789",
+        "sexo": "Masculino",
+        "iban": "PT50000201231234567890123",
+        "doencas": ["Gripes frequentes"],
+        "ferias": 10,
+        "faltas": {"justificadas": 2, "injustificadas": 1},
+        "salario": 1500,
+        "horario": "9h-18h",
+        "folgas": ["Sábado", "Domingo"]
+    },
+    {
+        "id": 2,
+        "nome": "Maria Fernandes",
+        "morada": "Avenida Y, 456",
+        "telemovel": "913456789",
+        "nif": "987654321",
+        "sexo": "Feminino",
+        "iban": "PT60000201231234567890123",
+        "doencas": [],
+        "ferias": 15,
+        "faltas": {"justificadas": 0, "injustificadas": 0},
+        "salario": 1800,
+        "horario": "9h-18h",
+        "folgas": ["Sábado", "Domingo"]
+    }
+]
