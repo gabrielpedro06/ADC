@@ -1,5 +1,7 @@
-import funcoes as f
+from admin import Admin
+from gestor import Gestor
 from funcionarios import Funcionario
+from departamentos import Departamento
 
 def menu_admin():
     # Menu de administração
@@ -18,25 +20,25 @@ def menu_admin():
         opcao = input("Escolha uma opção: ")
         
         if opcao == "1":
-            f.criar_funcionario()
+            Funcionario.criar_funcionario()
         elif opcao == "2":
-            f.listar_funcionarios()
-            f.editar_funcionario()
+            Funcionario.listar_funcionarios()
+            Funcionario.editar_funcionario()
         elif opcao == "3":
-            f.listar_funcionarios()
+            Funcionario.listar_funcionarios()
         elif opcao == "4":
-            f.listar_funcionarios()
-            f.remover_funcionario()
+            Funcionario.listar_funcionarios()
+            Funcionario.remover_funcionario()
         elif opcao == "5":
-            f.criar_departamento()
+            Departamento.criar_departamento()
         elif opcao == "6":
-            f.listar_departamentos()
-            f.editar_departamento()
+            Departamento.listar_departamentos()
+            Departamento.editar_departamento()
         elif opcao == "7":
-            f.listar_departamentos()
+            Departamento.listar_departamentos()
         elif opcao == "8":
-            f.listar_departamentos()
-            f.remover_departamento()
+            Departamento.listar_departamentos()
+            Departamento.remover_departamento()
         elif opcao == "9":
             break
         else:
@@ -44,10 +46,13 @@ def menu_admin():
 
 def menu_funcionario(funcionarios, utilizador):
     # Menu do funcionário
-    for funcionario in funcionarios:
-        if funcionario["id"] == utilizador:
-            nome = funcionario["nome"]
-            
+    funcionario = next((f for f in funcionarios if f["id"] == utilizador), None)
+    if funcionario is None:
+        print("Funcionário não encontrado.")
+        return
+
+    nome = funcionario["nome"]
+    
     while True:
         print(f"\n == Menu de Funcionário - {nome} == ")
         print("                               ")
@@ -60,29 +65,30 @@ def menu_funcionario(funcionarios, utilizador):
         opcao = input("Escolha uma opção: ")
         
         if opcao == "1":
-            Funcionario.editar_dados()
+            Funcionario.editar_dados(utilizador)
         elif opcao == "2":
-            Funcionario.consultar_ferias()
+            Funcionario.consultar_ferias(utilizador)
         elif opcao == "3":
-            Funcionario.consultar_faltas()
+            Funcionario.consultar_faltas(utilizador)
         elif opcao == "4":
-            Funcionario.consultar_salario()
+            Funcionario.consultar_salario(utilizador)
         elif opcao == "5":
-            Funcionario.consultar_folgas()
+            Funcionario.consultar_folgas(utilizador)
         elif opcao == "6":
             break
         else:
             print("Opção inválida!")
 
 def menu_gestor(departamentos, funcionarios, utilizador):
-    for funcionario in funcionarios:
-        if funcionario["id"] == utilizador:
-            nome = funcionario["nome"]
-            departamento = funcionario["id_departamento"]
-            
-    for d in departamentos:
-        if d["id"] == departamento:
-            nome_departamento = d["nome"]
+    funcionario = next((f for f in funcionarios if f["id"] == utilizador), None)
+    if not funcionario:
+        print("Gestor não encontrado.")
+        return
+
+    nome = funcionario["nome"]
+    departamento = funcionario["id_departamento"]
+    nome_departamento = next((d["nome"] for d in departamentos if d["id"] == departamento), "Departamento desconhecido")
+
     # Menu do gestor
     while True:
         print(f"\n == Menu de Gestor - {nome} | {nome_departamento} == ")
@@ -94,12 +100,19 @@ def menu_gestor(departamentos, funcionarios, utilizador):
         opcao = input("Escolha uma opção: ")
         
         if opcao == "1":
-            f.consultar_funcionarios_departamento(utilizador.departamento)
+            # Consulta os funcionários do mesmo departamento
+            Gestor.consultar_funcionarios_departamento(departamento)
         elif opcao == "2":
-            f.atribuir_funcionario_departamento()
+            # Atribui um funcionário ao departamento
+            funcionario_id = input("Digite o ID do funcionário a ser atribuído: ")
+            novo_departamento = input("Digite o ID do novo departamento: ")
+            Gestor.atribuir_funcionario_departamento(funcionario_id, novo_departamento)
         elif opcao == "3":
-            f.remover_funcionario_departamento()
+            # Remove um funcionário do departamento
+            funcionario_id = input("Digite o ID do funcionário a ser removido: ")
+            Gestor.remover_funcionario_departamento(funcionario_id)
         elif opcao == "4":
             break
         else:
             print("Opção inválida!")
+

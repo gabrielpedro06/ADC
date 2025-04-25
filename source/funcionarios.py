@@ -1,31 +1,30 @@
 import json
-
 class Funcionario:
     def __init__(self, dados):
-        self.id = dados[0]
-        self.id_departamento = dados[1]
-        self.funcao = dados[2]
-        self.nome = dados[3]
-        self.morada = dados[4]
-        self.telemovel = dados[5]
-        self.nif = dados[6]
-        self.sexo = dados[7]
-        self.iban = dados[8]
-        self.doencas = dados[9]
-        self.ferias = dados[10]
-        self.faltas = dados[11]
-        self.salario = dados[12]
-        self.horario = dados[13]
-        self.folgas = dados[14]
+        self._id = dados[0]
+        self._id_departamento = dados[1]
+        self._funcao = dados[2]
+        self._nome = dados[3]
+        self._morada = dados[4]
+        self._telemovel = dados[5]
+        self._nif = dados[6]
+        self._sexo = dados[7]
+        self._iban = dados[8]
+        self._doencas = dados[9]
+        self._ferias = dados[10]
+        self._faltas = dados[11]
+        self._salario = dados[12]
+        self._horario = dados[13]
+        self._folgas = dados[14]
     
     def __str__(self):
-        return f"""Funcionário {self.nome} (ID: {self.id}) - Departamento: {self.id_departamento} - Função {self.funcao}\nMorada: {self.morada} - Telemóvel: {self.telemovel}
-NIF: {self.nif} - IBAN: {self.iban} - Salário: {self.salario}€
-Sexo: {self.sexo} - Doenças: {self.doencas}
-Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} - Folgas: {self.folgas}
+        return f"""Funcionário {self._nome} (ID: {self._id}) - Departamento: {self._id_departamento} - Função {self._funcao}\nMorada: {self._morada} - Telemóvel: {self._telemovel}
+NIF: {self._nif} - IBAN: {self._iban} - Salário: {self._salario}€
+Sexo: {self._sexo} - Doenças: {self._doencas}
+Férias: {self._ferias} dias - Faltas: {self._faltas} - Horário: {self._horario} - Folgas: {self._folgas}
 """
 
-    # ----------- GETTERS E SETTERS -----------
+# ----------- GETTERS E SETTERS -----------    
     @property
     def id(self): return self._id
     @id.setter
@@ -101,15 +100,193 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
     @folgas.setter
     def folgas(self, value): self._folgas = value
 
-    # ----------- FUNÇÕES -----------
-    
-    def colocar_funcionario(self):
+# ----------- FUNÇÕES -----------    
+    def test_nif_telemovel(self, input):
+        if len(input) != 9 or not input.isdigit():
+            raise ValueError("Número inválido!")
+
+    def test_iban(self, input):
+        if len(input) == 21 and input.isdigit():
+            return "PT50" + input
+        else:
+            raise ValueError("IBAN inválido!")
+
+    def test_numbers(self, input):
+        if not input.isdigit():
+            raise ValueError("Insira um número!")
+
+    def criar_funcionario(self):
+        print("Criar funcionário")
+        # Criar novo funcionário
+        
+        nome = input("Insira o nome: ")
+        funcao = input("Insira a função (Funcionário/Gestor/Admin): ")
+        morada = input("Insira a morada: ")
+        telemovel = input("Insira o telemóvel: ")
+        self.test_nif_telemovel(telemovel)
+            
+        nif = input("Insira o NIF: ")
+        self.test_nif_telemovel(nif)
+            
+        sexo = input("Insira o sexo: ")
+        iban = input("Insira o IBAN (sem PT50): ")
+        iban_completo = self.test_iban(iban)
+            
+        doencas = input("Insira a(s) doença(s) separadas por vírgulas: ")
+        
+        ferias = input("Insira o número de dias de férias: ")
+        self.test_numbers(ferias)
+        ferias = int(ferias)
+        
+        salario = input("Insira o salário: ")
+        self.test_numbers(salario)
+        salario = salario + "€"
+        
+        horario = input("Insira o horário (inicioH - fimH): ")
+        folgas = input("Insira os dias de folgas (separados por vírgula): ")
+        
+        with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as arquivo_funcionarios:
+            funcionarios = json.load(arquivo_funcionarios)
+            id = max(funcionario['id'] for funcionario in funcionarios) + 1
+        
+        with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as arquivo_departamentos:
+            departamentos = json.load(arquivo_departamentos)
+            input_sigla = input("Insira a sigla do departamento: ").upper()
+            id_departamento = 0
+            found = False
+            for departamento in departamentos:
+                if input_sigla.upper() == departamento['sigla']:
+                    id_departamento = departamento['id']
+                    found = True
+                    
+            if not found:
+                print("Departamento não encontrado!")
+                
+        faltas = {"justificadas": 0, "injustificadas": 0}
+        dados = [id, id_departamento, funcao, nome, morada, telemovel, nif, sexo, iban_completo, doencas, ferias, faltas, salario, horario, folgas]
+        funcionario = Funcionario(dados)
+        funcionario.colocar_funcionario()
+        print(funcionario)
+        
+    def editar_funcionario(self):
+        # Determine qual ficheiro usar de acordo com a função
+        if self._funcao == "Funcionario":
+            file_path = 'ADC/data/funcionarios.json'
+        elif self._funcao == "Gestor":
+            file_path = 'ADC/data/gestor.json'
+        elif self._funcao == "Admin":
+            file_path = 'ADC/data/admin.json'
+
+        try:
+            with open(file_path, 'r', encoding="utf-8") as f:
+                funcionarios = json.load(f)
+        except FileNotFoundError:
+            print(f"O arquivo de {self._funcao}s não foi encontrado.")
+            return
+
+        id_func = int(input("ID do funcionário a editar: "))
+        funcionario = next((f for f in funcionarios if f['id'] == id_func), None)
+
+        if not funcionario:
+            print("Funcionário não encontrado.")
+            return
+
+        print("Deixa em branco para manter o valor atual.")
+        nome = input(f"Nome ({funcionario['nome']}): ") or funcionario['nome']
+        morada = input(f"Morada ({funcionario['morada']}): ") or funcionario['morada']
+        telemovel = input(f"Telemóvel ({funcionario['telemovel']}): ") or funcionario['telemovel']
+        nif = input(f"NIF ({funcionario['nif']}): ") or funcionario['nif']
+        sexo = input(f"Sexo ({funcionario['sexo']}): ") or funcionario['sexo']
+        iban = input(f"IBAN ({funcionario['iban']}): ") or funcionario['iban']
+        doencas = input(f"Doenças ({funcionario['doencas']}): ") or funcionario['doencas']
+        ferias = input(f"Férias ({funcionario['ferias']}): ") or funcionario['ferias']
+        salario = input(f"Salário ({funcionario['salario']}): ") or funcionario['salario']
+        horario = input(f"Horário ({funcionario['horario']}): ") or funcionario['horario']
+        folgas = input(f"Folgas ({funcionario['folgas']}): ") or funcionario['folgas']
+
+        funcionario.update({
+            'nome': nome,
+            'morada': morada,
+            'telemovel': telemovel,
+            'nif': nif,
+            'sexo': sexo,
+            'iban': iban,
+            'doencas': doencas,
+            'ferias': ferias,
+            'salario': salario,
+            'horario': horario,
+            'folgas': folgas
+        })
+
+        with open(file_path, 'w', encoding="utf-8") as f:
+            json.dump(funcionarios, f, indent=4)
+        print(f"{self._funcao} atualizado com sucesso.")
+
+        
+    def remover_funcionario(self):
+        # Lê o arquivo de funcionários
         try:
             with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
                 funcionarios = json.load(f)
         except FileNotFoundError:
-            funcionarios = []
+            print("O arquivo de funcionários não foi encontrado.")
+            return
+        except json.JSONDecodeError:
+            print("Erro ao ler o arquivo de funcionários.")
+            return
 
+        # Solicita o ID do funcionário a ser removido
+        id_func = int(input("ID do funcionário a remover: "))
+
+        # Encontra o funcionário com o ID fornecido
+        funcionario = next((f for f in funcionarios if f['id'] == id_func), None)
+
+        if not funcionario:
+            print("Funcionário não encontrado.")
+            return
+
+        # Remove o funcionário
+        funcionarios = [f for f in funcionarios if f['id'] != id_func]
+
+        # Atualiza o arquivo de funcionários
+        with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
+            json.dump(funcionarios, f, indent=4)
+        
+        print(f"Funcionário com ID {id_func} removido com sucesso.")
+
+    def listar_funcionarios():
+        try:
+            with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
+                funcionarios = json.load(f)
+
+            # Verifica se há funcionários para listar
+            if funcionarios:
+                print("\n == Lista de Funcionários == ")
+                for funcionario in funcionarios:
+                    print(f"ID: {funcionario['id']} | Nome: {funcionario['nome']}")
+            else:
+                print("Não há funcionários registrados.")
+        except FileNotFoundError:
+            print("O arquivo de funcionários não foi encontrado.")
+        except json.JSONDecodeError:
+            print("Erro ao ler o arquivo de funcionários.")
+    
+    def colocar_funcionario(self):
+        try:
+            # Abrir o ficheiro de funcionários para garantir que se inicia com dados válidos
+            if self._funcao == "Funcionario":
+                with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
+                    funcionarios = json.load(f)
+            elif self._funcao == "Gestor":
+                with open('ADC/data/gestor.json', 'r', encoding="utf-8") as f:
+                    funcionarios = json.load(f)
+            elif self._funcao == "Admin":
+                with open('ADC/data/admin.json', 'r', encoding="utf-8") as f:
+                    funcionarios = json.load(f)
+        except FileNotFoundError:
+            funcionarios = []  # Se o ficheiro não for encontrado, começa com uma lista vazia
+
+        # Criar um dicionário com os dados do funcionário
         funcionario = {
             "id": self._id,
             "id_departamento": self._id_departamento,
@@ -127,12 +304,23 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
             "horario": self._horario,
             "folgas": self._folgas
         }
+
         funcionarios.append(funcionario)
 
-        with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
+        # Definir o ficheiro correto de acordo com a função
+        if self._funcao == "Funcionario":
+            file_path = 'ADC/data/funcionarios.json'
+        elif self._funcao == "Gestor":
+            file_path = 'ADC/data/gestor.json'
+        elif self._funcao == "Admin":
+            file_path = 'ADC/data/admin.json'
+
+        # Gravar o novo funcionário no ficheiro correspondente
+        with open(file_path, 'w', encoding="utf-8") as f:
             json.dump(funcionarios, f, indent=4)
 
-        print("Funcionário adicionado com sucesso!")
+        print(f"{self._funcao} adicionado com sucesso!")
+
 
     def editar_dados(self):
         print("Editar Dados Pessoais")

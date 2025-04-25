@@ -12,5 +12,12 @@
         "sigla": "RH",
         "gestor": "Ana Souza",
         "funcionarios": [2]
+    },
+    {
+        "id": 3,
+        "nome": "Direcao",
+        "sigla": "DIR",
+        "gestor": "Pedro Lavia",
+        "funcionarios": [1]
     }
 ]

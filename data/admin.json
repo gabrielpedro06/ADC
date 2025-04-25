@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "id_departamento": 1,
+        "funcao": "Admin",
+        "nome": "Pedro Almeida",
+        "morada": "Rua W, 789",
+        "telemovel": "914567890",
+        "nif": "123987456",
+        "sexo": "Masculino",
+        "iban": "PT50000201231234567890123",
+        "doencas": [
+            "Dor de cabeça"
+        ],
+        "ferias": 12,
+        "faltas": {
+            "justificadas": 1,
+            "injustificadas": 0
+        },
+        "salario": 2500,
+        "horario": "9h-18h",
+        "folgas": [
+            "Sábado",
+            "Domingo"
+        ]
+    }
+]
