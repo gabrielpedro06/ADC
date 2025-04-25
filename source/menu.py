@@ -38,16 +38,21 @@ def menu_admin():
             f.listar_departamentos()
             f.remover_departamento()
         elif opcao == "9":
-            break
+            print("A voltar ao menu inicial!")
+            return
         else:
             print("Opção inválida!")
 
 def menu_funcionario(funcionarios, utilizador):
-    # Menu do funcionário
-    for funcionario in funcionarios:
-        if funcionario["id"] == utilizador:
-            nome = funcionario["nome"]
-            
+    # Encontrar o funcionário com o ID correspondente ao utilizador
+    funcionario = next((f for f in funcionarios if f["id"] == utilizador), None)
+    if not funcionario:
+        print("Funcionário não encontrado!")
+        return
+
+    nome = funcionario["nome"]
+    funcionario_atual = Funcionario(funcionario)
+
     while True:
         print(f"\n == Menu de Funcionário - {nome} == ")
         print("                               ")
@@ -56,50 +61,65 @@ def menu_funcionario(funcionarios, utilizador):
         print("|  3 - Consultar Faltas       |")
         print("|  4 - Consultar Salário      |")
         print("|  5 - Consultar Folgas       |")
-        print("|  6 - Sair                   |")
+        print("|  6 - Consultar Perfil       |")
+        print("|  7 - Sair                   |")
         opcao = input("Escolha uma opção: ")
-        
+
         if opcao == "1":
-            Funcionario.editar_dados()
+            funcionario_atual.editar_dados()
         elif opcao == "2":
-            Funcionario.consultar_ferias()
+            funcionario_atual.consultar_ferias()
         elif opcao == "3":
-            Funcionario.consultar_faltas()
+            funcionario_atual.consultar_faltas()
         elif opcao == "4":
-            Funcionario.consultar_salario()
+            funcionario_atual.consultar_salario()
         elif opcao == "5":
-            Funcionario.consultar_folgas()
+            funcionario_atual.consultar_folgas()
         elif opcao == "6":
-            break
+            funcionario_atual.consultar_perfil()
+        elif opcao == "7":
+            print("A voltar ao menu inicial!")
+            return
         else:
             print("Opção inválida!")
 
+
 def menu_gestor(departamentos, funcionarios, utilizador):
-    for funcionario in funcionarios:
-        if funcionario["id"] == utilizador:
-            nome = funcionario["nome"]
-            departamento = funcionario["id_departamento"]
-            
-    for d in departamentos:
-        if d["id"] == departamento:
-            nome_departamento = d["nome"]
-    # Menu do gestor
-    while True:
-        print(f"\n == Menu de Gestor - {nome} | {nome_departamento} == ")
-        print("                                             ")
-        print("|  1 - Consultar Funcionários               |")
-        print("|  2 - Atribuir Funcionário a Departamento  |")
-        print("|  3 - Remover Funcionário de Departamento  |")
-        print("|  4 - Sair                                 |")
-        opcao = input("Escolha uma opção: ")
-        
-        if opcao == "1":
-            f.consultar_funcionarios_departamento(utilizador.departamento)
-        elif opcao == "2":
-            f.atribuir_funcionario_departamento()
-        elif opcao == "3":
-            f.remover_funcionario_departamento()
-        elif opcao == "4":
-            break
+    # Encontrar o funcionário com o ID correspondente ao utilizador
+    funcionario = next((f for f in funcionarios if f['id'] == utilizador), None)
+    if funcionario:
+        nome = funcionario['nome']
+        departamento = funcionario['id_departamento']
+
+        # Encontrar o nome do departamento com base no id_departamento
+        nome_departamento = next((d['nome'] for d in departamentos if d['id'] == departamento), None)
+
+        if nome_departamento:
+            # Menu do gestor
+            while True:
+                print(f"\n == Menu de Gestor - {nome} | {nome_departamento} == ")
+                print("                                             ")
+                print("|  1 - Consultar Funcionários               |")
+                print("|  2 - Disponibilidade Semanal              |")
+                print("|  3 - Atribuir Funcionário a Departamento  |")
+                print("|  4 - Remover Funcionário de Departamento  |")
+                print("|  5 - Sair                                 |")
+                opcao = input("Escolha uma opção: ")
+
+                if opcao == "1":
+                    f.consultar_funcionarios_departamento(departamento)
+                elif opcao == "2":
+                    f.lista_func_semana(departamento)
+                elif opcao == "3":
+                    f.atribuir_funcionario_departamento()
+                elif opcao == "4":
+                    f.remover_funcionario_departamento()
+                elif opcao == "5":
+                    print("A voltar ao menu inicial!")
+                    return
+                else:
+                    print("Opção inválida!")
         else:
-            print("Opção inválida!")
+            print("Departamento não encontrado!")
+    else:
+        print("Funcionário não encontrado!")

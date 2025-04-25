@@ -2,22 +2,22 @@ import json
 
 class Funcionario:
     def __init__(self, dados):
-        self.id = dados[0]
-        self.id_departamento = dados[1]
-        self.funcao = dados[2]
-        self.nome = dados[3]
-        self.morada = dados[4]
-        self.telemovel = dados[5]
-        self.nif = dados[6]
-        self.sexo = dados[7]
-        self.iban = dados[8]
-        self.doencas = dados[9]
-        self.ferias = dados[10]
-        self.faltas = dados[11]
-        self.salario = dados[12]
-        self.horario = dados[13]
-        self.folgas = dados[14]
-    
+        self.id = dados["id"]
+        self.id_departamento = dados["id_departamento"]
+        self.funcao = dados["funcao"]
+        self.nome = dados["nome"]
+        self.morada = dados["morada"]
+        self.telemovel = dados["telemovel"]
+        self.nif = dados["nif"]
+        self.sexo = dados["sexo"]
+        self.iban = dados["iban"]
+        self.doencas = dados["doencas"]
+        self.ferias = dados["ferias"]
+        self.faltas = dados["faltas"]
+        self.salario = dados["salario"]
+        self.horario = dados["horario"]
+        self.folgas = dados["folgas"]
+
     def __str__(self):
         return f"""Funcionário {self.nome} (ID: {self.id}) - Departamento: {self.id_departamento} - Função {self.funcao}\nMorada: {self.morada} - Telemóvel: {self.telemovel}
 NIF: {self.nif} - IBAN: {self.iban} - Salário: {self.salario}€
@@ -211,6 +211,25 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
 
         print("Alterações guardadas com sucesso.")
 
+    def consultar_perfil(self):
+        perfil = f"""
+        ID: {self._id}
+        Departamento: {self._id_departamento}
+        Função: {self._funcao}
+        Nome: {self._nome}
+        Morada: {self._morada}
+        Telemóvel: {self._telemovel}
+        NIF: {self._nif}
+        Sexo: {self._sexo}
+        IBAN: {self._iban}
+        Doenças: {', '.join(self._doencas)}
+        Férias: {self._ferias} dias
+        Faltas: Justificadas: {self._faltas['justificadas']}, Injustificadas: {self._faltas['injustificadas']}
+        Salário: {self._salario}€
+        Horário: {self._horario}
+        Folgas: {', '.join(self._folgas)}
+        """
+        print(perfil)
 
     def consultar_ferias(self):
         print(f"Férias disponíveis: {self._ferias} dias")

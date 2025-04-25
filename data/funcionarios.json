@@ -2,54 +2,29 @@
     {
         "id": 1,
         "id_departamento": 1,
-        "funcao": "Funcionário",
-        "nome": "João Silva",
-        "morada": "Rua X, 123",
-        "telemovel": "912345678",
-        "nif": "123456789",
-        "sexo": "Masculino",
-        "iban": "PT50000201231234567890123",
-        "doencas": [
-            "Gripes frequentes"
-        ],
-        "ferias": 10,
-        "faltas": {
-            "justificadas": 2,
-            "injustificadas": 1
-        },
-        "salario": 1500,
-        "horario": "9h-18h",
-        "folgas": [
-            "Sábado",
-            "Domingo"
-        ]
-    },
-    {
-        "id": 2,
-        "id_departamento": 2,
-        "funcao": "Funcionário",
-        "nome": "Maria Fernandes",
-        "morada": "Avenida Y, 456",
-        "telemovel": "913456789",
-        "nif": "987654321",
+        "funcao": "Admin",
+        "nome": "Ana Souza",
+        "morada": "Rua T, 13",
+        "telemovel": "988254453",
+        "nif": "593726248",
         "sexo": "Feminino",
-        "iban": "PT50000201231234567890123",
+        "iban": "PT50000205363438791201212",
         "doencas": [],
         "ferias": 15,
         "faltas": {
             "justificadas": 0,
             "injustificadas": 0
         },
-        "salario": 1800,
+        "salario": 2500,
         "horario": "9h-18h",
         "folgas": [
-            "Sábado",
+            "S\u00e1bado",
             "Domingo"
         ]
     },
     {
-        "id": 3,
-        "id_departamento": 1,
+        "id": 2,
+        "id_departamento": 2,
         "funcao": "Gestor",
         "nome": "Carlos Gomes",
         "morada": "Avenida Z, 134",
@@ -66,55 +41,193 @@
         "salario": 2000,
         "horario": "9h-18h",
         "folgas": [
-            "Sábado",
+            "S\u00e1bado",
+            "Domingo"
+        ]
+    },
+    {
+        "id": 3,
+        "id_departamento": 3,
+        "funcao": "Gestor",
+        "nome": "Pedro Silva",
+        "morada": "Rua C, 321",
+        "telemovel": "922334455",
+        "nif": "667788990",
+        "sexo": "Feminino",
+        "iban": "PT50000205363438791202123",
+        "doencas": [],
+        "ferias": 18,
+        "faltas": {
+            "justificadas": 1,
+            "injustificadas": 0
+        },
+        "salario": 2100,
+        "horario": "9h-18h",
+        "folgas": [
+            "S\u00e1bado",
             "Domingo"
         ]
     },
     {
         "id": 4,
-        "id_departamento": 2,
+        "id_departamento": 4,
         "funcao": "Gestor",
-        "nome": "Ana Souza",
-        "morada": "Rua T, 13",
-        "telemovel": "988254453",
-        "nif": "593726248",
-        "sexo": "Feminino",
-        "iban": "PT50000205363438791201212",
+        "nome": "Laura Mendes",
+        "morada": "Avenida D, 789",
+        "telemovel": "929876543",
+        "nif": "112233445",
+        "sexo": "Masculino",
+        "iban": "PT50000201231234567890321",
         "doencas": [],
         "ferias": 15,
         "faltas": {
             "justificadas": 0,
             "injustificadas": 0
         },
-        "salario": 1950,
+        "salario": 2000,
         "horario": "9h-18h",
         "folgas": [
-            "Sábado",
+            "S\u00e1bado",
             "Domingo"
         ]
     },
     {
         "id": 5,
-        "id_departamento": 0,
-        "funcao": "Admin",
-        "nome": "Pedro Almeida",
-        "morada": "Rua W, 789",
-        "telemovel": "914567890",
-        "nif": "123987456",
+        "id_departamento": 5,
+        "funcao": "Gestor",
+        "nome": "Jo\u00e3o Ferreira",
+        "morada": "Rua E, 987",
+        "telemovel": "933445566",
+        "nif": "998877665",
         "sexo": "Masculino",
-        "iban": "PT50000201231234567890123",
-        "doencas": [
-            "Dor de cabeça"
-        ],
+        "iban": "PT50000205363438791202232",
+        "doencas": [],
         "ferias": 12,
         "faltas": {
             "justificadas": 1,
             "injustificadas": 0
         },
-        "salario": 2500,
+        "salario": 2200,
         "horario": "9h-18h",
         "folgas": [
-            "Sábado",
+            "S\u00e1bado",
+            "Domingo"
+        ]
+    },
+    {
+        "id": 6,
+        "id_departamento": 1,
+        "funcao": "Funcion\u00e1rio",
+        "nome": "Jo\u00e3o Silva",
+        "morada": "Rua X, 123",
+        "telemovel": "912345678",
+        "nif": "123456789",
+        "sexo": "Masculino",
+        "iban": "PT50000201231234567890123",
+        "doencas": [
+            "Gripes frequentes"
+        ],
+        "ferias": 10,
+        "faltas": {
+            "justificadas": 2,
+            "injustificadas": 1
+        },
+        "salario": 1500,
+        "horario": "9h-18h",
+        "folgas": [
+            "S\u00e1bado",
+            "Domingo"
+        ]
+    },
+    {
+        "id": 7,
+        "id_departamento": 2,
+        "funcao": "Funcion\u00e1rio",
+        "nome": "Maria Fernandes",
+        "morada": "Avenida Y, 456",
+        "telemovel": "913456789",
+        "nif": "987654321",
+        "sexo": "Feminino",
+        "iban": "PT50000201231234567890123",
+        "doencas": [],
+        "ferias": 15,
+        "faltas": {
+            "justificadas": 0,
+            "injustificadas": 0
+        },
+        "salario": 1800,
+        "horario": "9h-18h",
+        "folgas": [
+            "S\u00e1bado",
+            "Domingo"
+        ]
+    },
+    {
+        "id": 8,
+        "id_departamento": 3,
+        "funcao": "Funcion\u00e1rio",
+        "nome": "Luis Costa",
+        "morada": "Rua A, 789",
+        "telemovel": "918765432",
+        "nif": "112233445",
+        "sexo": "Masculino",
+        "iban": "PT50000201231234567890123",
+        "doencas": [],
+        "ferias": 20,
+        "faltas": {
+            "justificadas": 0,
+            "injustificadas": 1
+        },
+        "salario": 1700,
+        "horario": "9h-18h",
+        "folgas": [
+            "S\u00e1bado",
+            "Domingo"
+        ]
+    },
+    {
+        "id": 9,
+        "id_departamento": 4,
+        "funcao": "Funcion\u00e1rio",
+        "nome": "Ana Paula",
+        "morada": "Rua B, 321",
+        "telemovel": "917654321",
+        "nif": "665544332",
+        "sexo": "Feminino",
+        "iban": "PT50000201231234567890123",
+        "doencas": [],
+        "ferias": 18,
+        "faltas": {
+            "justificadas": 1,
+            "injustificadas": 0
+        },
+        "salario": 1600,
+        "horario": "9h-18h",
+        "folgas": [
+            "S\u00e1bado",
+            "Domingo"
+        ]
+    },
+    {
+        "id": 10,
+        "id_departamento": 5,
+        "funcao": "Funcion\u00e1rio",
+        "nome": "Carlos Silva",
+        "morada": "Rua F, 567",
+        "telemovel": "912345678",
+        "nif": "556677889",
+        "sexo": "Masculino",
+        "iban": "PT50000201231234567890123",
+        "doencas": [],
+        "ferias": 14,
+        "faltas": {
+            "justificadas": 0,
+            "injustificadas": 0
+        },
+        "salario": 1900,
+        "horario": "9h-18h",
+        "folgas": [
+            "S\u00e1bado",
             "Domingo"
         ]
     }

@@ -1,16 +1,37 @@
 [
     {
         "id": 1,
-        "nome": "Tecnlogias da Informação",
+        "nome": "Recursos Humanos",
+        "sigla": "RH",
+        "gestor": "Ana Souza",
+        "funcionarios": [2]
+    },
+    {
+        "id": 2,
+        "nome": "Tecnologias da Informação",
         "sigla": "TI",
         "gestor": "Carlos Gomes",
         "funcionarios": [1]
     },
     {
-        "id": 2,
-        "nome": "Recursos Humanos",
-        "sigla": "RH",
-        "gestor": "Ana Souza",
-        "funcionarios": [2]
+        "id": 3,
+        "nome": "Marketing",
+        "sigla": "MKT",
+        "gestor": "Pedro Silva",
+        "funcionarios": [3, 4]
+    },
+    {
+        "id": 4,
+        "nome": "Vendas",
+        "sigla": "VD",
+        "gestor": "Laura Mendes",
+        "funcionarios": [5]
+    },
+    {
+        "id": 5,
+        "nome": "Tesouraria",
+        "sigla": "TSR",
+        "gestor": "João Ferreira",
+        "funcionarios": [6, 7]
     }
 ]

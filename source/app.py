@@ -24,28 +24,38 @@ def salvar_dados(funcionarios, departamentos):
         json.dump(departamentos, arquivo_departamentos, indent=4)
 
 def main():
-    funcionarios, departamentos = carregar_dados()
-    
-    # Efetuar login
-    utilizador, papel = login(funcionarios)
-    
-    # Converte de novo para minúsculas
-    if papel == 'Funcionário':
-        papel = 'funcionario'
-    elif papel == 'Gestor':
-        papel = 'gestor'
-    elif papel == 'Admin':
-        papel = 'admin'
+    while True:
+        funcionarios, departamentos = carregar_dados()
         
-    # Chamar o menu correspondente de acordo com o papel
-    if papel == 'admin':
-        menu_admin()
-    elif papel == 'funcionario':
-        menu_funcionario(funcionarios, utilizador)
-    elif papel == 'gestor':
-        menu_gestor(departamentos, funcionarios, utilizador)
-    else:
-        print("Acesso negado!")
+        utilizador, papel = login(funcionarios)
+        
+        if not utilizador:  # Se login falhou
+            print("Tentando novamente...")
+            continue
+        
+        # Converte o papel para minúsculas
+        if papel == 'Funcionário':
+            papel = 'funcionario'
+        elif papel == 'Gestor':
+            papel = 'gestor'
+        elif papel == 'Admin':
+            papel = 'admin'
+        
+        # Chamar o menu correspondente de acordo com o papel
+        if papel == 'admin':
+            menu_admin()
+        elif papel == 'funcionario':
+            menu_funcionario(funcionarios, utilizador)
+        elif papel == 'gestor':
+            menu_gestor(departamentos, funcionarios, utilizador)
+        else:
+            print("Acesso negado!")
+        
+        # Perguntar se o utilizador quer voltar ao menu de login ou sair
+        opcao = input("Deseja voltar ao menu de login? (s/n): ").strip().lower()
+        if opcao != 's':
+            print("Programa terminado.")
+            break
 
 if __name__ == '__main__':
     main()

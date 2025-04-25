@@ -147,11 +147,19 @@ def listar_funcionarios():
         with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
             funcionarios = json.load(f)
 
+        # Carregar os departamentos para obter as siglas
+        with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as f:
+            departamentos = json.load(f)
+
         # Verifica se há funcionários para listar
         if funcionarios:
             print("\n == Lista de Funcionários == ")
             for funcionario in funcionarios:
-                print(f"ID: {funcionario['id']} | Nome: {funcionario['nome']}")
+                # Encontrar o departamento do funcionário e pegar a sigla
+                departamento = next((dep for dep in departamentos if dep['id'] == funcionario['id_departamento']), None)
+                sigla_departamento = departamento['sigla'] if departamento else 'Desconhecido'
+
+                print(f"ID: {funcionario['id']} | Nome: {funcionario['nome']} ({sigla_departamento})")
         else:
             print("Não há funcionários registrados.")
     except FileNotFoundError:
@@ -237,3 +245,119 @@ def listar_departamentos():
         print("O arquivo de departamentos não foi encontrado.")
     except json.JSONDecodeError:
         print("Erro ao ler o arquivo de departamentos.")
+        
+#Funções Gestores
+
+def consultar_funcionarios_departamento(id_departamento):
+    try:
+        with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
+            funcionarios = json.load(f)
+        
+        # Filtra os funcionários do departamento
+        funcionarios_departamento = [f for f in funcionarios if f['id_departamento'] == id_departamento]
+
+        if funcionarios_departamento:
+            print("\n == Funcionários do Departamento == ")
+            for funcionario in funcionarios_departamento:
+                print(f"ID: {funcionario['id']} | Nome: {funcionario['nome']}")
+        else:
+            print("Nenhum funcionário encontrado para este departamento.")
+    except FileNotFoundError:
+        print("O arquivo de funcionários não foi encontrado.")
+    except json.JSONDecodeError:
+        print("Erro ao ler o arquivo de funcionários.")
+
+def atribuir_funcionario_departamento():
+    try:
+        with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
+            funcionarios = json.load(f)
+        
+        id_funcionario = int(input("Insira o ID do funcionário: "))
+        funcionario = next((f for f in funcionarios if f['id'] == id_funcionario), None)
+
+        if funcionario:
+            print(f"Funcionário encontrado: {funcionario['nome']}")
+            novo_id_departamento = int(input("Insira o novo ID do departamento: "))
+            funcionario['id_departamento'] = novo_id_departamento
+
+            # Atualiza o arquivo com as mudanças
+            with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
+                json.dump(funcionarios, f, indent=4)
+            print(f"Funcionário {funcionario['nome']} foi atribuído ao departamento com ID {novo_id_departamento}.")
+        else:
+            print("Funcionário não encontrado.")
+    except FileNotFoundError:
+        print("O arquivo de funcionários não foi encontrado.")
+    except json.JSONDecodeError:
+        print("Erro ao ler o arquivo de funcionários.")
+
+def remover_funcionario_departamento():
+    try:
+        with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
+            funcionarios = json.load(f)
+        
+        id_funcionario = int(input("Insira o ID do funcionário a ser removido do departamento: "))
+        funcionario = next((f for f in funcionarios if f['id'] == id_funcionario), None)
+
+        if funcionario:
+            print(f"Funcionário encontrado: {funcionario['nome']}")
+            funcionario['id_departamento'] = None  # Remove o funcionário do departamento
+
+            # Atualiza o arquivo com as mudanças
+            with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
+                json.dump(funcionarios, f, indent=4)
+            print(f"Funcionário {funcionario['nome']} removido do departamento.")
+        else:
+            print("Funcionário não encontrado.")
+    except FileNotFoundError:
+        print("O arquivo de funcionários não foi encontrado.")
+    except json.JSONDecodeError:
+        print("Erro ao ler o arquivo de funcionários.")
+        
+def lista_func_semana(id_departamento):
+    dias_da_semana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"]
+    disponiveis = {dia: [] for dia in dias_da_semana}
+
+    try:
+        # Carregar os funcionários
+        with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
+            funcionarios = json.load(f)
+
+        # Carregar os departamentos
+        with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as f:
+            departamentos = json.load(f)
+
+        # Encontrar o departamento correspondente
+        departamento = next((d for d in departamentos if d['id'] == id_departamento), None)
+        if not departamento:
+            print("Departamento não encontrado.")
+            return
+
+        # Filtrar os funcionários do departamento
+        funcionarios_do_departamento = [
+            f for f in funcionarios if f['id_departamento'] == id_departamento
+        ]
+
+        # Verificar folgas e preencher dias disponíveis
+        for funcionario in funcionarios_do_departamento:
+            for dia in dias_da_semana:
+                if dia not in funcionario['folgas']:
+                    disponiveis[dia].append(funcionario['nome'])
+
+        # Imprimir resultados
+        print(f"\n== Disponibilidade dos Funcionários do Departamento {departamento['nome']} ({departamento['sigla']} - {departamento['id']}) ==\n")
+        for dia, nomes in disponiveis.items():
+            print(f"{dia}:")
+            if nomes:
+                for nome in nomes:
+                    print(f"  {nome}")
+            else:
+                print("  Nenhum funcionário disponível.")
+
+    except FileNotFoundError:
+        print("O arquivo de dados não foi encontrado.")
+    except json.JSONDecodeError:
+        print("Erro ao ler os arquivos de dados.")
+
+
+

@@ -1,8 +1,17 @@
 def login(funcionarios):
     # Pedir ID de utilizador e função
     print("Login")
-        # Pedir e validar função
-    role = input("Função (admin/gestor/funcionario): ").lower()
+    print("Utilizadores disponíveis:")
+    print("1 - Funcionário")
+    print("2 - Gestor")
+    print("3 - Administrador")
+    
+    # Pedir e validar função
+    role = input("Função (admin/gestor/funcionario) ou 'sair' para encerrar: ").lower()
+    if role == 'sair':
+        print("Programa encerrado.")
+        exit()  # Encerra o programa
+
     if role not in ['admin', 'gestor', 'funcionario']:
         print("Função inválida!")
         return None, None
@@ -21,7 +30,7 @@ def login(funcionarios):
     elif role == 'admin':
         role = "Admin"
         
-    # Procurar o utilizador com o ID 
+    # Procurar o utilizador com o ID
     for funcionario in funcionarios:
         if funcionario["id"] == user_id and funcionario["funcao"] == role:
             return user_id, role
