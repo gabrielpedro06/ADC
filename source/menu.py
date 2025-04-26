@@ -8,7 +8,7 @@ def menu_admin():
         print("                              ")
         print("|  1 - Criar Funcionário     |")
         print("|  2 - Editar Funcionário    |")
-        print("|  3 - Listar Funcionário    |")
+        print("|  3 - Listar Funcionários   |")
         print("|  4 - Remover Funcionário   |")
         print("|  5 - Criar Departamento    |")
         print("|  6 - Editar Departamento   |")

@@ -266,31 +266,5 @@
             "Quarta"
         ],
         "password": "123"
-    },
-    {
-        "id": 12,
-        "id_departamento": 2,
-        "funcao": "Funcion\u00e1rio",
-        "nome": "Afonso Almeida",
-        "morada": "Rua das Couves",
-        "telemovel": "987654321",
-        "nif": "123456789",
-        "sexo": "Masculino",
-        "iban": "PT50123456789012345678901",
-        "doencas": [
-            "Alergias"
-        ],
-        "ferias": 22,
-        "faltas": {
-            "justificadas": 0,
-            "injustificadas": 0
-        },
-        "salario": "1050\u20ac",
-        "horario": "8h-18h",
-        "folgas": [
-            "Segunda",
-            "Domingo"
-        ],
-        "password": "123"
     }
 ]
