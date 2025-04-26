@@ -1,74 +1,57 @@
-# ADC
+# Recursos Humanos — Projeto ADC
 
-## Recursos Humanos
+## Descrição do Projeto
+
+Aplicação de gestão de Recursos Humanos desenvolvida no âmbito da unidade curricular de Ambientes de Desenvolvimento Colaborativo (ADC).  
+O sistema organiza e facilita a gestão de funcionários, departamentos e administradores, com diferentes níveis de acesso e funcionalidades.
+
+## Estrutura de Utilizadores
 
 ### Funcionários
 
-- **Dados básicos**: Nome, Morada, Telemóvel, NIF, Sexo, IBAN, Doenças  
-- **Férias**: Nº de dias por gozar  
-- **Faltas**: Justificadas / Injustificadas  
-- **Salário**: Com base no nº de faltas e função  
-- **Horário de Trabalho**  
+- **Dados Pessoais**: Nome, Morada, Telemóvel, NIF, Sexo, IBAN, Doenças
+- **Férias**: Número de dias disponíveis
+- **Faltas**: Registo de faltas justificadas e injustificadas
+- **Salário**: Cálculo baseado no número de faltas e função
+- **Horário de Trabalho**
 - **Folgas**
 
-### Departamentos
+### Gestores de Departamento
 
-- **Gestor de Departamentos**  
-- **Número de Funcionários Disponíveis**: Se não for o dia de trabalho de um funcionário, este não é contabilizado.
+- **Gestão de Funcionários Disponíveis**: Consulta do número de funcionários disponíveis num determinado dia (considerando horários e folgas)
+- **Gestão de Horários e Folgas**: Atribuição e ajuste dos horários de trabalho e dias de folga dos funcionários
 
-### Admin
+### Administradores
 
-- Altera tudo  
-- Cria tudo (Funcionários / Departamentos)  
-- Tem acesso total a todos os dados  
-- Conta previamente criada no código  
+- **Gestão Completa**: Criação, edição e remoção de funcionários e departamentos
+- **Acesso Total**: Permissões para consultar e modificar todos os dados do sistema
+- **Conta Pré-Criada**: Conta de administrador criada diretamente no código para garantir o acesso inicial seguro
 
----
-
-## Funcionalidades por Tipo de Utilizador
+## Funcionalidades por Perfil
 
 ### Funcionário
 
-1. **Atualização de Dados Pessoais**  
-   *Como funcionário, quero poder visualizar e editar os meus dados básicos (Nome, Morada, Telemóvel, NIF, Sexo, IBAN e Doenças) para garantir que a informação está correta.*
-
-2. **Consulta e Gestão de Férias**  
-   *Como funcionário, quero poder consultar o número de dias de férias disponíveis e solicitar dias de férias para organizar melhor o meu tempo livre e permitir que o administrador analise a situação mais rapidamente.*
-
-3. **Consulta de Faltas**  
-   *Como funcionário, quero poder visualizar as minhas faltas justificadas e injustificadas para acompanhar o meu histórico de assiduidade.*
-
-4. **Consulta de Salário**  
-   *Como funcionário, quero poder visualizar o meu salário com base na minha função.*
-
-5. **Consulta do Horário de Trabalho**  
-   *Como funcionário, quero poder ver o meu horário de trabalho para melhor organização.*
-
-6. **Consulta de Folgas**  
-   *Como funcionário, quero poder ver os dias de folga atribuídos para planear melhor o meu tempo livre.*
-
----
+- Atualizar dados pessoais
+- Consultar e solicitar dias de férias
+- Consultar faltas justificadas e injustificadas
+- Consultar salário atual
+- Consultar horário de trabalho
+- Consultar dias de folga
 
 ### Gestor de Departamento
 
-1. **Consulta de Funcionários Disponíveis**  
-   *Como gestor de departamento, quero ver quantos funcionários estão disponíveis num determinado dia para planear melhor a distribuição do trabalho.*
-
-2. **Gestão de Horários e Folgas**  
-   *Como gestor de departamento, quero poder gerir os horários e folgas dos funcionários para garantir um funcionamento eficiente da equipa.*
-
----
+- Consultar funcionários disponíveis por dia
+- Gerir horários de trabalho e folgas dos funcionários
 
 ### Administrador (RH)
 
-1. **Gestão de Funcionários (RH)**  
-   *Como administrador, quero poder criar, editar e remover funcionários para manter o registo atualizado.*
+- Criar, editar e remover funcionários
+- Criar, editar e remover departamentos
+- Acesso completo a todos os dados de funcionários e departamentos
+- Conta de administrador previamente criada para gestão inicial do sistema
 
-2. **Gestão de Departamentos (RH)**  
-   *Como administrador, quero poder criar, editar e remover departamentos para manter a organização da empresa.*
+## Observações
 
-3. **Permissões de Acesso (RH)**  
-   *Como administrador, quero ter acesso a todas as informações dos funcionários e departamentos para garantir uma supervisão completa.*
-
-4. **Conta de Administrador Pré-Criada (RH)**  
-   *Como administrador, quero ter uma conta de admin já criada no código para garantir um acesso inicial seguro e controlado.*
+- A aplicação utiliza ficheiros JSON para armazenamento de dados.
+- A segurança das credenciais do administrador é assegurada por criação direta no código-fonte.
+- A gestão de salários considera fatores como o número de faltas e a função exercida.
