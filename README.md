@@ -5,6 +5,24 @@
 Aplicação de gestão de Recursos Humanos desenvolvida no âmbito da unidade curricular de Ambientes de Desenvolvimento Colaborativo (ADC).  
 O sistema organiza e facilita a gestão de funcionários, departamentos e administradores, com diferentes níveis de acesso e funcionalidades.
 
+## Índice
+
+### `source/`
+
+- **app.py**: Contém a lógica principal da aplicação.
+- **auth.py**: Responsável pela autenticação de utilizadores (admin, gestor, funcionário).
+- **departamentos.py**: Lida com a gestão dos departamentos.
+- **funcionarios.py**: Contém as funções relacionadas com os dados dos funcionários.
+- **funcoes.py**: Contém funções auxiliares gerais do sistema.
+- **menu.py**: Define os menus e a interação do utilizador.
+- **.gitignore**: Arquivo para ignorar ficheiros não desejados no controlo de versão.
+- **README.md**: Documentação do projeto.
+
+### `data/`
+
+- **departamentos.json**: Armazena os dados dos departamentos.
+- **funcionarios.json**: Armazena os dados dos funcionários.
+
 ## Estrutura de Utilizadores
 
 ### Funcionários
