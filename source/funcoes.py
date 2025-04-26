@@ -1,6 +1,8 @@
+import os
 import json
 from getpass import getpass 
 from funcionarios import Funcionario
+
 
 def test_nif_telemovel(valor):
     if len(valor) != 9 or not valor.isdigit():
@@ -29,6 +31,28 @@ def validar_folgas(input_folgas):
         if dia not in dias_validos:
             raise ValueError(f"Dia de folga inválido: {dia}. Use dias exatamente como: {', '.join(dias_validos)}.")
     return folgas
+
+def validar_horario(horario):
+    partes = horario.split(",")
+    if len(partes) != 2:
+        raise ValueError("Formato de horário inválido! Use o formato 'hora_início,hora_fim' (ex: 10,18).")
+    
+    inicio, fim = partes
+
+    if not (inicio.isdigit() and fim.isdigit()):
+        raise ValueError("As horas devem ser números inteiros.")
+
+    inicio = int(inicio)
+    fim = int(fim)
+
+    if not (0 <= inicio <= 23 and 0 <= fim <= 23):
+        raise ValueError("As horas devem estar entre 0 e 23.")
+
+    if inicio >= fim:
+        raise ValueError("A hora de início deve ser menor que a hora de fim.")
+
+    return f"{inicio}h-{fim}h"
+
 
 def criar_funcionario():
     print("Criar funcionário")
@@ -143,10 +167,44 @@ def criar_funcionario():
 
     
 def editar_funcionario():
-    with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
-        funcionarios = json.load(f)
+    def input_valido(prompt, atual, tipo="str", max_len=None, numero_digitos=None, validar_func=None):
+        valor = input(f"{prompt} ({atual}): ").strip()
+        if not valor:
+            return atual
 
-    id_func = int(input("ID do funcionário a editar: "))
+        try:
+            if validar_func:
+                return validar_func(valor)
+            if tipo == "int":
+                test_numbers(valor)
+                if numero_digitos:
+                    test_nif_telemovel(valor)
+                return int(valor)
+            if tipo == "float":
+                return float(valor)
+            if tipo == "str":
+                if max_len and len(valor) > max_len:
+                    raise ValueError(f"Valor demasiado longo. Máximo {max_len} caracteres.")
+                return valor
+        except ValueError as e:
+            print(e)
+            return atual
+
+        return atual
+
+    try:
+        with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
+            funcionarios = json.load(f)
+    except FileNotFoundError:
+        print("Ficheiro de funcionários não encontrado.")
+        return
+
+    try:
+        id_func = int(input("ID do funcionário a editar: "))
+    except ValueError:
+        print("ID inválido.")
+        return
+
     funcionario = next((f for f in funcionarios if f['id'] == id_func), None)
 
     if not funcionario:
@@ -154,23 +212,24 @@ def editar_funcionario():
         return
 
     print("Deixa em branco para manter o valor atual.")
-    nome = input(f"Nome ({funcionario['nome']}): ") or funcionario['nome']
-    morada = input(f"Morada ({funcionario['morada']}): ") or funcionario['morada']
-    telemovel = input(f"Telemóvel ({funcionario['telemovel']}): ") or funcionario['telemovel']
-    nif = input(f"NIF ({funcionario['nif']}): ") or funcionario['nif']
-    sexo = input(f"Sexo ({funcionario['sexo']}): ") or funcionario['sexo']
-    iban = input(f"IBAN ({funcionario['iban']}): ") or funcionario['iban']
-    doencas = input(f"Doenças ({funcionario['doencas']}): ") or funcionario['doencas']
-    ferias = input(f"Férias ({funcionario['ferias']}): ") or funcionario['ferias']
-    salario = input(f"Salário ({funcionario['salario']}): ") or funcionario['salario']
-    horario = input(f"Horário ({funcionario['horario']}): ") or funcionario['horario']
-    folgas = input(f"Folgas ({funcionario['folgas']}): ") or funcionario['folgas']
+
+    nome = input_valido("Nome", funcionario['nome'], tipo="str", max_len=100)
+    morada = input_valido("Morada", funcionario['morada'], tipo="str", max_len=150)
+    telemovel = input_valido("Telemóvel", funcionario['telemovel'], tipo="int", numero_digitos=9)
+    nif = input_valido("NIF", funcionario['nif'], tipo="int", numero_digitos=9)
+    sexo = input_valido("Sexo (M/F)", funcionario['sexo'], validar_func=lambda x: x.upper() if x.upper() in ['M', 'F'] else (_ for _ in ()).throw(ValueError("Sexo inválido. Deve ser 'M' ou 'F'.")))
+    iban = input_valido("IBAN", funcionario['iban'], validar_func=test_iban)
+    doencas = input_valido("Doenças", funcionario['doencas'], tipo="str", max_len=200)
+    ferias = input_valido("Férias (dias)", funcionario['ferias'], tipo="int")
+    salario = input_valido("Salário", funcionario['salario'], tipo="float")
+    horario = input_valido("Horário (ex: 10,18)", funcionario['horario'], validar_func=validar_horario)
+    folgas = input_valido("Folgas", funcionario['folgas'], validar_func=validar_folgas)
 
     funcionario.update({
         'nome': nome,
         'morada': morada,
-        'telemovel': telemovel,
-        'nif': nif,
+        'telemovel': str(telemovel),
+        'nif': str(nif),
         'sexo': sexo,
         'iban': iban,
         'doencas': doencas,
@@ -181,8 +240,10 @@ def editar_funcionario():
     })
 
     with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
-        json.dump(funcionarios, f, indent=4)
+        json.dump(funcionarios, f, indent=4, ensure_ascii=False)
+
     print("Funcionário atualizado com sucesso.")
+
     
 def remover_funcionario():
     # Lê o arquivo de funcionários
