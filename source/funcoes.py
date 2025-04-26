@@ -1,8 +1,6 @@
-import os
 import json
 from getpass import getpass 
 from funcionarios import Funcionario
-
 
 def test_nif_telemovel(valor):
     if len(valor) != 9 or not valor.isdigit():
@@ -314,7 +312,9 @@ def criar_departamento():
     novo_departamento = {
         "id": novo_id,
         "nome": nome,
-        "sigla": sigla
+        "sigla": sigla,
+        "gestor": None, # Inicialmente sem gestor
+        "funcionarios": [] # Incialmente sem funcionarios
     }
 
     departamentos.append(novo_departamento)
@@ -323,6 +323,8 @@ def criar_departamento():
         json.dump(departamentos, f, indent=4)
 
     print(f"Departamento '{nome}' criado com sucesso.")
+    
+    atribuir_gestor_departamento(novo_id) # Chama a função para ser atribuido um gestor ao departamento criado
 
 def remover_departamento():
     sigla = input("Sigla do departamento a remover: ").upper()
@@ -448,6 +450,47 @@ def remover_funcionario_departamento():
         print("O arquivo de funcionários não foi encontrado.")
     except json.JSONDecodeError:
         print("Erro ao ler o arquivo de funcionários.")
+        
+def atribuir_gestor_departamento(id_departamento):
+    id_gestor = int(input("Insira o ID do gestor: "))
+    
+    try:
+        with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
+            funcionarios = json.load(f)
+            
+            for funcionario in funcionarios:
+                if funcionario['id'] == id_gestor:
+                    if funcionario['funcao'] != "Gestor":
+                        funcionario['funcao'] = "Gestor"
+                        nome_funcionario = funcionario['nome'] # Guarda o nome do funcionario para uso futuro.
+                        encontrado = True
+                    else:
+                        print("O funcionário já é um gestor.")
+                
+            if not encontrado:
+                print("Funcionário não encontrado.")
+                        
+            with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as f:
+                departamentos = json.load(f)
+                            
+                for departamento in departamentos:
+                    if departamento['id'] == id_departamento:
+                        departamento['gestor'] = nome_funcionario # Atribui o nome do fucionario ao gestor do departamento
+                        break
+                    
+                with open('ADC/data/departamentos.json', 'w', encoding="utf-8") as f:
+                    json.dump(departamentos, f, indent=4) # Guarda as alterações no departamento
+                
+                with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
+                    json.dump(funcionarios, f, indent=4) # Guarda as alterações no funcionario
+                    
+                print(f"Funcionario {nome_funcionario} promovido a Gestor do departamento {departamento['nome']}")
+                
+    except FileNotFoundError:
+        print("O arquivo de funcionários não foi encontrado.")
+    except json.JSONDecodeError:
+        print("Erro ao ler o arquivo de funcionários.")
+
         
 def lista_func_semana(id_departamento):
     dias_da_semana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]

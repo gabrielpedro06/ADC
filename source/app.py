@@ -1,6 +1,4 @@
 import json
-from funcionarios import Funcionario
-from departamentos import Departamento
 from auth import login
 from menu import menu_admin, menu_funcionario, menu_gestor
 
