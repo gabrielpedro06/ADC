@@ -1,10 +1,10 @@
+import json
+import getpass
+
 def login(funcionarios):
     # Pedir ID de utilizador e função
-    print("Login")
-    print("Utilizadores disponíveis:")
-    print("1 - Funcionário")
-    print("2 - Gestor")
-    print("3 - Administrador")
+    print("======== BEM-VINDO AOS RECURSOS-HUMANOS! ========")
+    print("LOGIN: ")
     
     # Pedir e validar função
     role = input("Função (admin/gestor/funcionario) ou 'sair' para encerrar: ").lower()
@@ -29,11 +29,26 @@ def login(funcionarios):
         role = "Gestor"
     elif role == 'admin':
         role = "Admin"
+    
+    try:
+        # Verificar os utilizadores no arquivo
+        with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
+            funcionarios = json.load(f)
         
-    # Procurar o utilizador com o ID
-    for funcionario in funcionarios:
-        if funcionario["id"] == user_id and funcionario["funcao"] == role:
-            return user_id, role
-    else:
-        print("Utilizador não encontrado!")
-        return None, None
+        for funcionario in funcionarios:
+            if funcionario["id"] == user_id and funcionario["funcao"] == role:
+                # Usar getpass para capturar a palavra-passe de forma segura
+                password_input = getpass.getpass("Insira a sua palavra-passe: ")
+                if funcionario.get('password') == password_input:
+                    print(f"Login bem-sucedido! Bem-vindo(a), {funcionario['nome']}.\n")
+                    return user_id, role
+                else:
+                    print("Senha inválida!")
+                    return None, None
+        else:
+            print("Utilizador não encontrado!")
+            return None, None  
+    except FileNotFoundError:
+        print("Ficheiro de utilizadores não encontrado.")
+    except json.JSONDecodeError:
+        print("Erro ao ler o ficheiro.")

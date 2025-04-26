@@ -17,6 +17,7 @@ class Funcionario:
         self.salario = dados["salario"]
         self.horario = dados["horario"]
         self.folgas = dados["folgas"]
+        self.password = dados["password"]  # Novo campo para a password
 
     def __str__(self):
         return f"""Funcionário {self.nome} (ID: {self.id}) - Departamento: {self.id_departamento} - Função {self.funcao}\nMorada: {self.morada} - Telemóvel: {self.telemovel}
@@ -25,7 +26,7 @@ Sexo: {self.sexo} - Doenças: {self.doencas}
 Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} - Folgas: {self.folgas}
 """
 
-    # ----------- GETTERS E SETTERS -----------
+    # ----------- GETTERS E SETTERS -----------    
     @property
     def id(self): return self._id
     @id.setter
@@ -100,9 +101,13 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
     def folgas(self): return self._folgas
     @folgas.setter
     def folgas(self, value): self._folgas = value
-
-    # ----------- FUNÇÕES -----------
     
+    @property
+    def password(self): return self._password
+    @password.setter
+    def password(self, value): self._password = value
+
+    # ----------- FUNÇÕES -----------    
     def colocar_funcionario(self):
         try:
             with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
@@ -125,7 +130,8 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
             "faltas": self._faltas,
             "salario": self._salario,
             "horario": self._horario,
-            "folgas": self._folgas
+            "folgas": self._folgas,
+            "password": self._password  # Adiciona a password ao objeto
         }
         funcionarios.append(funcionario)
 
@@ -174,6 +180,10 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         if folgas_input:
             self._folgas = [f.strip().capitalize() for f in folgas_input.split(",") if f.strip()]
         
+        password_input = input("Alterar palavra-passe (deixe em branco para manter a atual): ")
+        if password_input:
+            self._password = password_input
+
         self.guardar_alteracoes()
 
 
@@ -202,7 +212,8 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
                     "faltas": self._faltas,
                     "salario": self._salario,
                     "horario": self._horario,
-                    "folgas": self._folgas
+                    "folgas": self._folgas,
+                    "password": self._password  # Atualiza a password
                 }
                 break
 
@@ -222,9 +233,9 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         NIF: {self._nif}
         Sexo: {self._sexo}
         IBAN: {self._iban}
-        Doenças: {', '.join(self._doencas)}
+        Doenças: {self._doencas}
         Férias: {self._ferias} dias
-        Faltas: Justificadas: {self._faltas['justificadas']}, Injustificadas: {self._faltas['injustificadas']}
+        Faltas: Justificadas: {self._faltas['justificadas']} Injustificadas: {self._faltas['injustificadas']}
         Salário: {self._salario}€
         Horário: {self._horario}
         Folgas: {', '.join(self._folgas)}

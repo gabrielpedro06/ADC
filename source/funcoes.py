@@ -1,72 +1,146 @@
 import json
+from getpass import getpass 
 from funcionarios import Funcionario
 
-def test_nif_telemovel(input):
-    if len(input) != 9 and input.isdigit():
-        raise ValueError("Número inválido!")
+def test_nif_telemovel(valor):
+    if len(valor) != 9 or not valor.isdigit():
+        raise ValueError("Número inválido! Deve ter exatamente 9 dígitos.")
 
-def test_iban(input):
-    if len(input) == 21 and input.isdigit():
-        return "PT50" + input
+def test_iban(iban):
+    if len(iban) == 21 and iban.isdigit():
+        return "PT50" + iban
     else:
-        raise ValueError("IBAN inválido!")
+        raise ValueError("IBAN inválido! Deve ter 21 dígitos numéricos (sem PT50).")
 
-def test_numbers(input):
-    if not input.isdigit():
-        raise ValueError("Insira um número!")
+def test_numbers(valor):
+    if not valor.isdigit():
+        raise ValueError("Insira um número válido!")
+
+def validar_funcao(funcao):
+    opcoes_validas = ["Funcionário", "Gestor", "Admin"]
+    if funcao.capitalize() not in opcoes_validas:
+        raise ValueError(f"Função inválida! Escolha uma das seguintes: {', '.join(opcoes_validas)}")
+    return funcao.capitalize()
+
+def validar_folgas(input_folgas):
+    dias_validos = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
+    folgas = [dia.strip() for dia in input_folgas.split(",")]
+    for dia in folgas:
+        if dia not in dias_validos:
+            raise ValueError(f"Dia de folga inválido: {dia}. Use dias exatamente como: {', '.join(dias_validos)}.")
+    return folgas
 
 def criar_funcionario():
     print("Criar funcionário")
-    # Criar novo funcionário
-      
+
     nome = input("Insira o nome: ")
-    funcao = input("Insira a função (Funcionário/Gestor/Admin): ")
+
+    while True:
+        try:
+            funcao = validar_funcao(input("Insira a função (Funcionário/Gestor/Admin): "))
+            break
+        except ValueError as e:
+            print(e)
+
     morada = input("Insira a morada: ")
-    telemovel = input("Insira o telemóvel: ")
-    test_nif_telemovel(telemovel)
-        
-    nif = input("Insira o NIF: ")
-    test_nif_telemovel(nif)
-        
+
+    while True:
+        try:
+            telemovel = input("Insira o telemóvel: ")
+            test_nif_telemovel(telemovel)
+            break
+        except ValueError as e:
+            print(e)
+
+    while True:
+        try:
+            nif = input("Insira o NIF: ")
+            test_nif_telemovel(nif)
+            break
+        except ValueError as e:
+            print(e)
+
     sexo = input("Insira o sexo: ")
-    iban = input("Insira o IBAN (sem PT50): ")
-    iban_completo = test_iban(iban)
-        
+
+    while True:
+        try:
+            iban = input("Insira o IBAN (sem PT50): ")
+            iban_completo = test_iban(iban)
+            break
+        except ValueError as e:
+            print(e)
+
     doencas = input("Insira a(s) doença(s) separadas por vírgulas: ")
-    
-    ferias = input("Insira o número de dias de férias: ")
-    test_numbers(ferias)
-    ferias = int(ferias)
-    
-    salario = input("Insira o salário: ")
-    test_numbers(salario)
-    salario = salario + "€"
-    
+
+    while True:
+        try:
+            ferias = input("Insira o número de dias de férias: ")
+            test_numbers(ferias)
+            ferias = int(ferias)
+            break
+        except ValueError as e:
+            print(e)
+
+    while True:
+        try:
+            salario = input("Insira o salário: ")
+            test_numbers(salario)
+            salario = salario + "€"
+            break
+        except ValueError as e:
+            print(e)
+
     horario = input("Insira o horário (inicioH - fimH): ")
-    folgas = input("Insira os dias de folgas (separados por vírgula): ")
-    
+
+    while True:
+        try:
+            folgas = validar_folgas(input("Insira os dias de folgas (ex: segunda,domingo): "))
+            break
+        except ValueError as e:
+            print(e)
+
+    password = getpass("Insira a password do funcionário: ")
+
     with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as arquivo_funcionarios:
         funcionarios = json.load(arquivo_funcionarios)
         id = max(funcionario['id'] for funcionario in funcionarios) + 1
-    
+
     with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as arquivo_departamentos:
         departamentos = json.load(arquivo_departamentos)
-        input_sigla = input("Insira a sigla do departamento: ").upper()
-        id_departamento = 0
-        found = False
-        for departamento in departamentos:
-            if input_sigla.upper() == departamento['sigla']:
-                id_departamento = departamento['id']
-                found = True
-                
-        if not found:
-            print("Departamento não encontrado!")
-            
+        while True:
+            input_sigla = input("Insira a sigla do departamento: ").upper()
+            encontrado = next((d for d in departamentos if d['sigla'] == input_sigla), None)
+            if encontrado:
+                id_departamento = encontrado['id']
+                break
+            else:
+                print("Departamento não encontrado! Tente novamente.")
+
     faltas = {"justificadas": 0, "injustificadas": 0}
-    dados = [id, id_departamento, funcao, nome, morada, telemovel, nif, sexo, iban_completo, doencas, ferias, faltas, salario, horario, folgas]
+
+    dados = {
+        "id": id,
+        "id_departamento": id_departamento,
+        "funcao": funcao,
+        "nome": nome,
+        "morada": morada,
+        "telemovel": telemovel,
+        "nif": nif,
+        "sexo": sexo,
+        "iban": iban_completo,
+        "doencas": [d.strip() for d in doencas.split(",")],
+        "ferias": ferias,
+        "faltas": faltas,
+        "salario": salario,
+        "horario": horario,
+        "folgas": folgas,
+        "password": password
+    }
+
     funcionario = Funcionario(dados)
     funcionario.colocar_funcionario()
-    funcionario.__str__()
+    print(f"Funcionário '{nome}' criado com sucesso.")
+
     
 def editar_funcionario():
     with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
@@ -315,7 +389,7 @@ def remover_funcionario_departamento():
         print("Erro ao ler o arquivo de funcionários.")
         
 def lista_func_semana(id_departamento):
-    dias_da_semana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"]
+    dias_da_semana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
     disponiveis = {dia: [] for dia in dias_da_semana}
 
     try:

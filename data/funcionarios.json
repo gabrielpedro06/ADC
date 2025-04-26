@@ -20,7 +20,8 @@
         "folgas": [
             "S\u00e1bado",
             "Domingo"
-        ]
+        ],
+        "password": "123"
     },
     {
         "id": 2,
@@ -43,7 +44,8 @@
         "folgas": [
             "S\u00e1bado",
             "Domingo"
-        ]
+        ],
+        "password": "123"
     },
     {
         "id": 3,
@@ -66,7 +68,8 @@
         "folgas": [
             "S\u00e1bado",
             "Domingo"
-        ]
+        ],
+        "password": "123"
     },
     {
         "id": 4,
@@ -89,7 +92,8 @@
         "folgas": [
             "S\u00e1bado",
             "Domingo"
-        ]
+        ],
+        "password": "123"
     },
     {
         "id": 5,
@@ -112,7 +116,8 @@
         "folgas": [
             "S\u00e1bado",
             "Domingo"
-        ]
+        ],
+        "password": "123"
     },
     {
         "id": 6,
@@ -137,7 +142,8 @@
         "folgas": [
             "S\u00e1bado",
             "Domingo"
-        ]
+        ],
+        "password": "123"
     },
     {
         "id": 7,
@@ -160,7 +166,8 @@
         "folgas": [
             "S\u00e1bado",
             "Domingo"
-        ]
+        ],
+        "password": "123"
     },
     {
         "id": 8,
@@ -183,7 +190,8 @@
         "folgas": [
             "S\u00e1bado",
             "Domingo"
-        ]
+        ],
+        "password": "123"
     },
     {
         "id": 9,
@@ -206,7 +214,8 @@
         "folgas": [
             "S\u00e1bado",
             "Domingo"
-        ]
+        ],
+        "password": "123"
     },
     {
         "id": 10,
@@ -229,6 +238,59 @@
         "folgas": [
             "S\u00e1bado",
             "Domingo"
-        ]
+        ],
+        "password": "123"
+    },
+    {
+        "id": 11,
+        "id_departamento": 2,
+        "funcao": "Funcion\u00e1rio",
+        "nome": "Gabriel Pedro",
+        "morada": "Rua das Couves",
+        "telemovel": "987654321",
+        "nif": "123456789",
+        "sexo": "Masculino",
+        "iban": "PT50123456789012345678901",
+        "doencas": [
+            "Renite"
+        ],
+        "ferias": 22,
+        "faltas": {
+            "justificadas": 0,
+            "injustificadas": 0
+        },
+        "salario": "1050\u20ac",
+        "horario": "8h-18h",
+        "folgas": [
+            "Terca",
+            "Quarta"
+        ],
+        "password": "123"
+    },
+    {
+        "id": 12,
+        "id_departamento": 2,
+        "funcao": "Funcion\u00e1rio",
+        "nome": "Afonso Almeida",
+        "morada": "Rua das Couves",
+        "telemovel": "987654321",
+        "nif": "123456789",
+        "sexo": "Masculino",
+        "iban": "PT50123456789012345678901",
+        "doencas": [
+            "Alergias"
+        ],
+        "ferias": 22,
+        "faltas": {
+            "justificadas": 0,
+            "injustificadas": 0
+        },
+        "salario": "1050\u20ac",
+        "horario": "8h-18h",
+        "folgas": [
+            "Segunda",
+            "Domingo"
+        ],
+        "password": "123"
     }
 ]
