@@ -53,7 +53,7 @@ def menu_funcionario(funcionarios, utilizador):
         print("Funcionário não encontrado!")
         return
 
-    nome = funcionario["nome"]
+    nome = funcionario["_nome"]
     funcionario_atual = Funcionario(funcionario)
 
     while True:
@@ -100,7 +100,7 @@ def menu_gestor(departamentos, funcionarios, utilizador):
         departamento = funcionario['_id_departamento']
 
         # Encontrar o nome do departamento com base no id_departamento
-        nome_departamento = next((d['nome'] for d in departamentos if d['id'] == departamento), None)
+        nome_departamento = next((d['_nome'] for d in departamentos if d['_id'] == departamento), None)
 
         if nome_departamento:
             # Menu do gestor
