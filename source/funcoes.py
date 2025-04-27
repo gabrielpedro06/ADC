@@ -51,6 +51,12 @@ def validar_horario(horario):
 
     return f"{inicio}h-{fim}h"
 
+def validar_sexo(sexo):
+    sexo = sexo.upper()
+    if sexo not in ['M', 'F']:
+        raise ValueError("Sexo inválido. Deve ser 'M' ou 'F'.")
+    return sexo
+
 
 def criar_funcionario():
     print("Criar funcionário")
@@ -82,7 +88,15 @@ def criar_funcionario():
         except ValueError as e:
             print(e)
 
-    sexo = input("Insira o sexo: ")
+    while True:
+        try:
+            sexo = input("Insira o sexo (M/F): ")
+            validar_sexo(sexo)
+            sexo = sexo.upper()
+            break
+        except ValueError as e:
+            print(e)
+
 
     while True:
         try:
@@ -112,7 +126,13 @@ def criar_funcionario():
         except ValueError as e:
             print(e)
 
-    horario = input("Insira o horário (inicioH - fimH): ")
+    while True:
+        try:
+            horario = input("Insira o horário (formato hora_início,hora_fim, ex: 10,18): ")
+            horario = validar_horario(horario)
+            break
+        except ValueError as e:
+            print(e)
 
     while True:
         try:
@@ -216,7 +236,7 @@ def editar_funcionario():
     morada = input_valido("Morada", funcionario['_morada'], tipo="str", max_len=150)
     telemovel = input_valido("Telemóvel", funcionario['_telemovel'], tipo="int", numero_digitos=9)
     nif = input_valido("NIF", funcionario['_nif'], tipo="int", numero_digitos=9)
-    sexo = input_valido("Sexo (M/F)", funcionario['_sexo'], validar_func=lambda x: x.upper() if x.upper() in ['M', 'F'] else (_ for _ in ()).throw(ValueError("Sexo inválido. Deve ser 'M' ou 'F'.")))
+    sexo = input_valido("Sexo (M/F)", funcionario['_sexo'], validar_func=validar_sexo)
     iban = input_valido("IBAN", funcionario['_iban'], validar_func=test_iban)
     doencas = input_valido("Doenças", funcionario['_doencas'], tipo="str", max_len=200)
     ferias = input_valido("Férias (dias)", funcionario['_ferias'], tipo="int")
