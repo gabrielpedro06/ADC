@@ -261,11 +261,9 @@
         "_nif": "123456789",
         "_sexo": "Masculino",
         "_iban": "PT50123456789012345678901",
-        "_doencas": [
-            "Renite"
-        ],
+        "_doencas": "Renite,Sinusite",
         "_ferias": 10,
-        "_ferias_status": null,
+        "_ferias_status": 2,
         "_faltas": {
             "justificadas": 0,
             "injustificadas": 0
@@ -275,6 +273,34 @@
         "_folgas": [
             "Ter\u00e7a",
             "Quarta"
+        ],
+        "_password": "123"
+    },
+    {
+        "_id": 12,
+        "_id_departamento": 2,
+        "_funcao": "Gestor",
+        "_nome": "Afonso Almeida",
+        "_morada": "Rua das Marias",
+        "_telemovel": "987654321",
+        "_nif": "123456789",
+        "_sexo": "Masculino",
+        "_iban": "PT50123456789012345678901",
+        "_doencas": [
+            "Alergias",
+            "Renite"
+        ],
+        "_ferias": 22,
+        "_ferias_status": "Em f\u00e9rias",
+        "_faltas": {
+            "justificadas": 0,
+            "injustificadas": 0
+        },
+        "_salario": "1060\u20ac",
+        "_horario": "8h-18h",
+        "_folgas": [
+            "Segunda",
+            "Ter\u00e7a"
         ],
         "_password": "123"
     }
