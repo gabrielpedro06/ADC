@@ -2,6 +2,12 @@ import funcoes as f
 from funcionarios import Funcionario
 
 def menu_admin():
+    """
+    Função de apresentação do menu de adminsitração.
+    O menu apresenta várias opções para o admin, e dependendo da sua escolha, chama a função correspondente.
+    O menu continua a ser apresentado até que o admin escolha ou a opção de sair ou uma opção válida.
+    """
+    
     # Menu de administração
     while True:
         print("\n == Menu de Administração ==")
@@ -47,6 +53,12 @@ def menu_admin():
             print("Opção inválida!")
 
 def menu_funcionario(funcionarios, utilizador):
+    """
+    Função de apresentação do menu de funcionário.
+    O menu apresenta várias opções para o funcionário, e dependendo da sua escolha, chama a função correspondente.
+    O menu continua a ser apresentado até que o funcionário escolha ou a opção de sair ou uma opção válida.
+    """
+    
     # Encontrar o funcionário com o ID correspondente ao utilizador
     funcionario = next((f for f in funcionarios if f["_id"] == utilizador), None)
     if not funcionario:
@@ -91,6 +103,12 @@ def menu_funcionario(funcionarios, utilizador):
 
 
 def menu_gestor(departamentos, funcionarios, utilizador):
+    """v
+    Função de apresentação do menu de gestor.
+    O menu apresenta várias opções para o gestor, e dependendo da sua escolha, chama a função correspondente.
+    O menu continua a ser apresentado até que o gestor escolha ou a opção de sair ou uma opção válida.
+    """
+    
     # Encontrar o funcionário com o ID correspondente ao utilizador
     funcionario = next((f for f in funcionarios if f['_id'] == utilizador), None)
 
