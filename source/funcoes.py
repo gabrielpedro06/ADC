@@ -2,27 +2,34 @@ import json
 from getpass import getpass 
 from funcionarios import Funcionario
 
+
 def test_nif_telemovel(valor):
+    """Valida se o valor tem exatamente 9 dígitos numéricos."""
     if len(valor) != 9 or not valor.isdigit():
         raise ValueError("Número inválido! Deve ter exatamente 9 dígitos.")
 
+
 def test_iban(iban):
+    """Valida e formata um IBAN português (sem o prefixo PT50)."""
     if len(iban) == 21 and iban.isdigit():
         return "PT50" + iban
     else:
         raise ValueError("IBAN inválido! Deve ter 21 dígitos numéricos (sem PT50).")
 
 def test_numbers(valor):
+    """Garante que o valor é composto apenas por dígitos."""
     if not valor.isdigit():
         raise ValueError("Insira um número válido!")
 
 def validar_funcao(funcao):
+    """Valida se a função inserida é Funcionário, Gestor ou Admin."""
     opcoes_validas = ["Funcionário", "Gestor", "Admin"]
     if funcao.capitalize() not in opcoes_validas:
         raise ValueError(f"Função inválida! Escolha uma das seguintes: {', '.join(opcoes_validas)}")
     return funcao.capitalize()
 
 def validar_folgas(input_folgas):
+    """Valida os dias de folga inseridos."""
     dias_validos = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
     folgas = [dia.strip() for dia in input_folgas.split(",")]
     for dia in folgas:
@@ -31,6 +38,7 @@ def validar_folgas(input_folgas):
     return folgas
 
 def validar_horario(horario):
+    """Valida e formata o horário de trabalho (hora início, hora fim)."""
     partes = horario.split(",")
     if len(partes) != 2:
         raise ValueError("Formato de horário inválido! Use o formato 'hora_início,hora_fim' (ex: 10,18).")
@@ -52,15 +60,17 @@ def validar_horario(horario):
     return f"{inicio}h-{fim}h"
 
 def validar_sexo(sexo):
+    """Valida o sexo inserido (M ou F)."""
     sexo = sexo.upper()
     if sexo not in ['M', 'F']:
         raise ValueError("Sexo inválido. Deve ser 'M' ou 'F'.")
     return sexo
 
+# ========================= Gestão de Funcionários =========================
 
 def criar_funcionario():
+    """Cria um novo funcionário e guarda-o no ficheiro JSON."""
     print("Criar funcionário")
-
     nome = input("Insira o nome: ")
 
     while True:
@@ -186,6 +196,7 @@ def criar_funcionario():
 
     
 def editar_funcionario():
+    """Edita os dados de um funcionário existente."""
     def input_valido(prompt, atual, tipo="str", max_len=None, numero_digitos=None, validar_func=None):
         valor = input(f"{prompt} ({atual}): ").strip()
         if not valor:
@@ -267,6 +278,7 @@ def editar_funcionario():
 
     
 def remover_funcionario():
+    """Remove um funcionário do ficheiro JSON."""
     # Lê o arquivo de funcionários
     try:
         with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
@@ -299,6 +311,7 @@ def remover_funcionario():
 
     
 def listar_funcionarios():
+    """Lista todos os funcionários registados."""
     try:
         with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
             funcionarios = json.load(f)
