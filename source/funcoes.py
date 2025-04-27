@@ -152,6 +152,7 @@ def criar_funcionario():
         "iban": iban_completo,
         "doencas": [d.strip() for d in doencas.split(",")],
         "ferias": ferias,
+        "ferias_status": ferias if ferias > 0 else None,
         "faltas": faltas,
         "salario": salario,
         "horario": horario,
@@ -222,6 +223,7 @@ def editar_funcionario():
     salario = input_valido("Salário", funcionario['salario'], tipo="float")
     horario = input_valido("Horário (ex: 10,18)", funcionario['horario'], validar_func=validar_horario)
     folgas = input_valido("Folgas", funcionario['folgas'], validar_func=validar_folgas)
+    ferias_status = "Em férias" if ferias > 0 else "Sem férias"
 
     funcionario.update({
         'nome': nome,
@@ -232,6 +234,7 @@ def editar_funcionario():
         'iban': iban,
         'doencas': doencas,
         'ferias': ferias,
+        'ferias_status': ferias_status,  # Atualizar o ferias_status
         'salario': salario,
         'horario': horario,
         'folgas': folgas
@@ -391,12 +394,12 @@ def consultar_funcionarios_departamento(id_departamento):
             funcionarios = json.load(f)
         
         # Filtra os funcionários do departamento
-        funcionarios_departamento = [f for f in funcionarios if f['id_departamento'] == id_departamento]
+        funcionarios_departamento = [f for f in funcionarios if f['_id_departamento'] == id_departamento]
 
         if funcionarios_departamento:
             print("\n == Funcionários do Departamento == ")
             for funcionario in funcionarios_departamento:
-                print(f"ID: {funcionario['id']} | Nome: {funcionario['nome']}")
+                print(f"ID: {funcionario['_id']} | Nome: {funcionario['_nome']}")
         else:
             print("Nenhum funcionário encontrado para este departamento.")
     except FileNotFoundError:
@@ -410,17 +413,17 @@ def atribuir_funcionario_departamento():
             funcionarios = json.load(f)
         
         id_funcionario = int(input("Insira o ID do funcionário: "))
-        funcionario = next((f for f in funcionarios if f['id'] == id_funcionario), None)
+        funcionario = next((f for f in funcionarios if f['_id'] == id_funcionario), None)
 
         if funcionario:
-            print(f"Funcionário encontrado: {funcionario['nome']}")
+            print(f"Funcionário encontrado: {funcionario['_nome']}")
             novo_id_departamento = int(input("Insira o novo ID do departamento: "))
-            funcionario['id_departamento'] = novo_id_departamento
+            funcionario['_id_departamento'] = novo_id_departamento
 
             # Atualiza o arquivo com as mudanças
             with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
                 json.dump(funcionarios, f, indent=4)
-            print(f"Funcionário {funcionario['nome']} foi atribuído ao departamento com ID {novo_id_departamento}.")
+            print(f"Funcionário {funcionario['_nome']} foi atribuído ao departamento com ID {novo_id_departamento}.")
         else:
             print("Funcionário não encontrado.")
     except FileNotFoundError:
@@ -434,16 +437,16 @@ def remover_funcionario_departamento():
             funcionarios = json.load(f)
         
         id_funcionario = int(input("Insira o ID do funcionário a ser removido do departamento: "))
-        funcionario = next((f for f in funcionarios if f['id'] == id_funcionario), None)
+        funcionario = next((f for f in funcionarios if f['_id'] == id_funcionario), None)
 
         if funcionario:
-            print(f"Funcionário encontrado: {funcionario['nome']}")
-            funcionario['id_departamento'] = None  # Remove o funcionário do departamento
+            print(f"Funcionário encontrado: {funcionario['_nome']}")
+            funcionario['_id_departamento'] = None  # Remove o funcionário do departamento
 
             # Atualiza o arquivo com as mudanças
             with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
                 json.dump(funcionarios, f, indent=4)
-            print(f"Funcionário {funcionario['nome']} removido do departamento.")
+            print(f"Funcionário {funcionario['_nome']} removido do departamento.")
         else:
             print("Funcionário não encontrado.")
     except FileNotFoundError:
@@ -454,18 +457,21 @@ def remover_funcionario_departamento():
 def atribuir_gestor_departamento(id_departamento):
     id_gestor = int(input("Insira o ID do gestor: "))
     
+    encontrado = False  # Inicializa a variável 'encontrado'
+
     try:
         with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
             funcionarios = json.load(f)
             
             for funcionario in funcionarios:
-                if funcionario['id'] == id_gestor:
-                    if funcionario['funcao'] != "Gestor":
-                        funcionario['funcao'] = "Gestor"
-                        nome_funcionario = funcionario['nome'] # Guarda o nome do funcionario para uso futuro.
+                if funcionario['_id'] == id_gestor:
+                    if funcionario['_funcao'] != "Gestor":
+                        funcionario['_funcao'] = "Gestor"
+                        nome_funcionario = funcionario['_nome']  # Guarda o nome do funcionario para uso futuro.
                         encontrado = True
                     else:
                         print("O funcionário já é um gestor.")
+                        encontrado = True  # Definir como encontrado, mas não fazer alterações.
                 
             if not encontrado:
                 print("Funcionário não encontrado.")
@@ -473,25 +479,26 @@ def atribuir_gestor_departamento(id_departamento):
             with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as f:
                 departamentos = json.load(f)
                             
+
                 for departamento in departamentos:
                     if departamento['id'] == id_departamento:
-                        departamento['gestor'] = nome_funcionario # Atribui o nome do fucionario ao gestor do departamento
+                        departamento['gestor'] = id_gestor  # Atribui o id do gestor ao departamento
                         break
-                    
+                        
                 with open('ADC/data/departamentos.json', 'w', encoding="utf-8") as f:
-                    json.dump(departamentos, f, indent=4) # Guarda as alterações no departamento
-                
-                with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
-                    json.dump(funcionarios, f, indent=4) # Guarda as alterações no funcionario
+                    json.dump(departamentos, f, indent=4)  # Guarda as alterações no departamento
                     
-                print(f"Funcionario {nome_funcionario} promovido a Gestor do departamento {departamento['nome']}")
+                with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
+                    json.dump(funcionarios, f, indent=4)  # Guarda as alterações no funcionario
+                    
+                if encontrado:
+                    print(f"Funcionario {nome_funcionario} promovido a Gestor do departamento {departamento['nome']}")
                 
     except FileNotFoundError:
         print("O arquivo de funcionários não foi encontrado.")
     except json.JSONDecodeError:
         print("Erro ao ler o arquivo de funcionários.")
 
-        
 def lista_func_semana(id_departamento):
     dias_da_semana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
     disponiveis = {dia: [] for dia in dias_da_semana}
@@ -506,24 +513,25 @@ def lista_func_semana(id_departamento):
             departamentos = json.load(f)
 
         # Encontrar o departamento correspondente
-        departamento = next((d for d in departamentos if d['id'] == id_departamento), None)
+        departamento = next((d for d in departamentos if d['_id'] == id_departamento), None)
         if not departamento:
             print("Departamento não encontrado.")
             return
 
         # Filtrar os funcionários do departamento
         funcionarios_do_departamento = [
-            f for f in funcionarios if f['id_departamento'] == id_departamento
+            f for f in funcionarios if f.get('_id_departamento') == id_departamento
         ]
 
         # Verificar folgas e preencher dias disponíveis
         for funcionario in funcionarios_do_departamento:
             for dia in dias_da_semana:
-                if dia not in funcionario['folgas']:
-                    disponiveis[dia].append(funcionario['nome'])
+                # Se o dia não estiver nas folgas do funcionário, ele está disponível
+                if dia not in funcionario.get('_folgas', []):
+                    disponiveis[dia].append(funcionario['_nome'])
 
         # Imprimir resultados
-        print(f"\n== Disponibilidade dos Funcionários do Departamento {departamento['nome']} ({departamento['sigla']} - {departamento['id']}) ==\n")
+        print(f"\n== Disponibilidade dos Funcionários do Departamento {departamento['_nome']} ({departamento['_sigla']} - {departamento['_id']}) ==\n")
         for dia, nomes in disponiveis.items():
             print(f"{dia}:")
             if nomes:
@@ -537,5 +545,72 @@ def lista_func_semana(id_departamento):
     except json.JSONDecodeError:
         print("Erro ao ler os arquivos de dados.")
 
+
+# ============ Aprovação Ferias ========================
+
+def carregar_funcionarios():
+    # Carregar o arquivo de funcionários
+    with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
+        funcionarios_data = json.load(f)
+
+    # Instanciar objetos Funcionario a partir dos dados carregados
+    funcionarios = [Funcionario(func) for func in funcionarios_data]
+    return funcionarios
+
+def ferias_func():
+    funcionarios = carregar_funcionarios()  # Carregar os funcionários
+    print("== Férias de Funcionários por Aprovar ==")
+
+    # Filtra os funcionários com pedidos de férias pendentes
+    pendentes = [f for f in funcionarios if f._ferias_status is not None]
+
+    if not pendentes:
+        print("Não há pedidos de férias pendentes.")
+        return
+
+    for funcionario in pendentes:
+        print(f"{funcionario._nome} (ID: {funcionario._id}) pediu {funcionario._ferias_status} dias de férias.")
+
+    aprovacao = input("Para aprovar digite 'aprovar,<id>', para recusar digite 'recusar,<id>': ").strip()
+
+    if aprovacao.startswith("aprovar"):
+        _, id_funcionario = aprovacao.split(",")
+        id_funcionario = int(id_funcionario)
+
+        funcionario = next((f for f in funcionarios if f._id == id_funcionario), None)
+
+        if funcionario and funcionario._ferias_status is not None:
+            # Aprovar férias
+            funcionario._ferias -= funcionario._ferias_status
+            funcionario._ferias_status = None  # Resetar o status
+            print(f"Férias de {funcionario._nome} aprovadas!")
+
+            # Salvar as alterações no arquivo
+            funcionarios_data = [f.__dict__ for f in funcionarios]  # Converter objetos de volta para dicionários
+            with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
+                json.dump(funcionarios_data, f, indent=4)
+
+        else:
+            print("Funcionário não encontrado ou não tem férias pendentes.")
+
+    elif aprovacao.startswith("recusar"):
+        _, id_funcionario = aprovacao.split(",")
+        id_funcionario = int(id_funcionario)
+
+        funcionario = next((f for f in funcionarios if f._id == id_funcionario), None)
+
+        if funcionario and funcionario._ferias_status is not None:
+            # Recusar férias
+            funcionario._ferias_status = None  # Resetar o status
+            print(f"Férias de {funcionario._nome} recusadas.")
+
+            # Salvar as alterações no arquivo
+            funcionarios_data = [f.__dict__ for f in funcionarios]  # Converter objetos de volta para dicionários
+            with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
+                json.dump(funcionarios_data, f, indent=4)
+        else:
+            print("Funcionário não encontrado ou não tem férias pendentes.")
+    else:
+        print("Comando inválido!")
 
 
