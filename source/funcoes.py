@@ -112,7 +112,15 @@ def criar_funcionario():
         except ValueError as e:
             print(e)
 
-    horario = input("Insira o horário (inicioH - fimH): ")
+    
+
+    while True:
+        try:
+            horario = input("Insira o horário (formato HH:MM): ")
+            validar_horario(horario)  # Verifica se o horário está no formato correto
+            break
+        except ValueError as e:
+             print(e)
 
     while True:
         try:

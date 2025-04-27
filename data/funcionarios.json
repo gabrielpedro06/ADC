@@ -260,5 +260,30 @@
             "Quarta"
         ],
         "password": "123"
+    },
+    {
+        "id": 12,
+        "id_departamento": 2,
+        "funcao": "Funcionário",
+        "nome": "Claudio",
+        "morada": "Moradatal,1",
+        "telemovel": "123456784",
+        "nif": "123457689",
+        "sexo": "M",
+        "iban": "PT50123456789123456789122",
+        "doencas": [
+            "Nenhuma"
+        ],
+        "ferias": 28,
+        "faltas": {
+            "justificadas": 0,
+            "injustificadas": 0
+        },
+        "salario": "3000€",
+        "horario": "17,18",
+        "folgas": [
+            "Segunda"
+        ],
+        "password": "123"
     }
 ]
