@@ -1,7 +1,10 @@
 import json
 
 class Funcionario:
+    """Classe que representa um funcionário, com vários atributos e funcionalidades para gerir dados pessoais, férias, faltas, etc."""
+    
     def __init__(self, dados):
+        """Inicializa uma instância de Funcionario com os dados fornecidos.Parametro dados: Dicionário com os dados do funcionário."""
         self._id = dados["_id"]
         self._id_departamento = dados["_id_departamento"]
         self._funcao = dados["_funcao"]
@@ -20,6 +23,12 @@ class Funcionario:
         self._folgas = dados["_folgas"]
         self._password = dados["_password"]
 
+        """
+        Representação em string do objeto Funcionario.
+        
+        return= String formatada com os detalhes do funcionário.
+        """
+
     def __str__(self):
         return f"""Funcionário {self.nome} (ID: {self.id}) - Departamento: {self.id_departamento} - Função {self.funcao}\nMorada: {self.morada} - Telemóvel: {self.telemovel}
 NIF: {self.nif} - IBAN: {self.iban} - Salário: {self.salario}€
@@ -27,8 +36,10 @@ Sexo: {self.sexo} - Doenças: {self.doencas}
 Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} - Folgas: {self.folgas}
 """
 
-    # ----------- GETTERS E SETTERS -----------    
+    # ----------- GETTERS E SETTERS -----------  
+      
     @property
+    
     def id(self): return self._id
     @id.setter
     def id(self, value): self._id = value
@@ -115,6 +126,9 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
     
     # ----------- FUNÇÕES -----------    
     def colocar_funcionario(self):
+        """
+        Adiciona um novo funcionário ao arquivo JSON.
+        """
         try:
             with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
                 funcionarios = json.load(f)
@@ -148,6 +162,9 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         print("Funcionário adicionado com sucesso!")
 
     def editar_dados(self):
+        """
+        Permite ao funcionário editar seus dados pessoais.
+        """
         print("Editar Dados Pessoais")
         
         self._nome = input(f"Nome (atual: {self._nome}): ") or self._nome
@@ -165,6 +182,9 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         self.guardar_alteracoes()
 
     def guardar_alteracoes(self):
+        """
+        Guarda as alterações feitas aos dados do funcionário no arquivo JSON.
+        """
         try:
             with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
                 funcionarios = json.load(f)
@@ -201,6 +221,10 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         print("Alterações guardadas com sucesso.")
 
     def consultar_perfil(self):
+        """
+        Exibe o perfil completo do funcionário, incluindo ID, departamento, função, nome, morada,
+        telemóvel, NIF, sexo, IBAN, doenças, férias, faltas, salário, horário e folgas.
+        """
         perfil = f"""
         ID: {self._id}
         Departamento: {self._id_departamento}
@@ -222,19 +246,37 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         print(perfil)
 
     def consultar_ferias(self):
+        """
+        Exibe o status das férias do funcionário, incluindo o número de dias disponíveis e os dias em aprovação.
+        """
         status_ferias = self._ferias_status if self._ferias_status else "Não solicitado"
         print(f"Férias disponíveis: {self._ferias} dias. Por Aprovação: {status_ferias}")
 
     def consultar_faltas(self):
+        """
+        Exibe o número de faltas justificadas e injustificadas do funcionário.
+        """
         print(f"Faltas justificadas: {self._faltas['justificadas']}, Injustificadas: {self._faltas['injustificadas']}")
     
     def consultar_salario(self):
+        """
+        Exibe o salário atual do funcionário.
+        """
         print(f"Salário: {self._salario}€")
     
     def consultar_folgas(self):
+        """
+        Exibe os dias de folga atribuídos ao funcionário.
+        """
         print(f"Folgas: {', '.join(self._folgas)}")
 
     def pedir_ferias(self, dias):
+        """
+        Permite ao funcionário pedir férias, verificando se ele tem dias suficientes disponíveis.
+        
+        Parâmetros:
+        dias (int): Número de dias solicitados para as férias.
+        """
         if dias <= self._ferias:
             self._ferias -= dias
             print(f"{dias} dias de férias aprovados. Férias restantes: {self._ferias}")
@@ -242,23 +284,50 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
             print("Não tem dias suficientes de férias.")
 
     def registar_falta(self, justificada=True):
+        """
+        Registra uma falta do funcionário, podendo ser justificada ou não.
+        
+        Parâmetros:
+        justificada (bool): Define se a falta é justificada ou não. O valor padrão é True.
+        """
         tipo = "justificadas" if justificada else "injustificadas"
         self._faltas[tipo] += 1
         print(f"Falta {tipo[:-1]} registada com sucesso.")
 
     def atualizar_horario(self, novo_horario):
+        """
+        Atualiza o horário de trabalho do funcionário.
+        
+        Parâmetros:
+        novo_horario (str): O novo horário de trabalho do funcionário.
+        """
         self._horario = novo_horario
         print(f"Horário atualizado para: {self._horario}")
 
     def aumentar_salario(self, valor):
+        """
+        Aumenta o salário do funcionário.
+        
+        Parâmetros:
+        valor (float): O valor do aumento salarial.
+        """
         self._salario += valor
         print(f"Novo salário: {self._salario}€")
 
     def atribuir_folga(self, dia):
+        """
+        Atribui um dia de folga ao funcionário.
+        
+        Parâmetros:
+        dia (str): O dia da semana em que o funcionário terá folga.
+        """
         self._folgas.append(dia)
         print(f"Folga atribuída: {dia}")
 
     def remover_funcionario(self):
+        """
+        Remove o funcionário do arquivo de dados (funcionarios.json).
+        """
         try:
             with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
                 funcionarios = json.load(f)
@@ -274,6 +343,12 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         print(f"Funcionário {self._id} removido com sucesso.")
 
     def carregar_funcionarios(self):
+        """
+        Carrega os dados de funcionários a partir do arquivo JSON e cria uma lista de instâncias de Funcionario.
+        
+        Retorna:
+        List[Funcionario]: Lista de objetos Funcionario carregados.
+        """
         # Carregar o arquivo de funcionários
         with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
             funcionarios_data = json.load(f)
@@ -285,6 +360,9 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
 
 
     def pedir_ferias(self):
+        """
+        Permite ao funcionário solicitar férias, verificando a disponibilidade de dias e o status da solicitação.
+        """
         if self.ferias == 0:
             print("Você não tem dias de férias disponíveis.")
             return

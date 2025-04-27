@@ -338,6 +338,7 @@ def listar_funcionarios():
 
 
 def criar_departamento():
+    """Cria um novo departamento."""
     nome = input("Nome do novo departamento: ")
     sigla = input("Sigla (ex: INF): ").upper()
 
@@ -363,6 +364,7 @@ def criar_departamento():
     atribuir_gestor_departamento(novo_id)  # Chama a função para ser atribuído um gestor ao departamento criado
 
 def remover_departamento():
+    """Remove um departamento do ficheiro JSON."""
     sigla = input("Sigla do departamento a remover: ").upper()
 
     with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as f:
@@ -378,6 +380,7 @@ def remover_departamento():
         print(f"Departamento com sigla '{sigla}' removido.")
 
 def editar_departamento():
+    """Edita o nome de um departamento existente."""
     sigla = input("Sigla do departamento a editar: ").upper()
 
     with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as f:
@@ -401,6 +404,7 @@ def editar_departamento():
     print("Departamento não encontrado.")
 
 def listar_departamentos():
+    """Lista todos os departamentos registados."""
     try:
         with open('ADC/data/departamentos.json', 'r', encoding="utf-8") as f:
             departamentos = json.load(f)
