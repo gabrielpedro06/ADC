@@ -285,5 +285,31 @@
             "Segunda"
         ],
         "password": "123"
+    },
+    {
+        "id": 13,
+        "id_departamento": 1,
+        "funcao": "Funcionário",
+        "nome": "Daniel GOAT",
+        "morada": "Aveniada LEbron,1",
+        "telemovel": "123456786",
+        "nif": "123456785",
+        "sexo": "M",
+        "iban": "PT50122222233344554433221",
+        "doencas": [
+            "Nenhuma"
+        ],
+        "ferias": 66,
+        "faltas": {
+            "justificadas": 0,
+            "injustificadas": 0
+        },
+        "salario": "666666€",
+        "horario": "12h-19h",
+        "folgas": [
+            "Segunda",
+            "Domingo"
+        ],
+        "password": "123"
     }
 ]
