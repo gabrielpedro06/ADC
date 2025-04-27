@@ -3,6 +3,10 @@ from auth import login
 from menu import menu_admin, menu_funcionario, menu_gestor
 
 def carregar_dados():
+    """
+    Carrega os dados dos arquivos JSOn de funcionarios e departamentos.
+    Caso o ficheiro seja encontrado, devolve os dados e caso não seja encontrado, devolve duas listas vazias.
+    """
     try:
         # Carregar dados dos arquivos JSON
         with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as arquivo_funcionarios:
@@ -14,14 +18,13 @@ def carregar_dados():
         print(f"Erro ao abrir arquivo: {e}")
         return [], []
 
-def salvar_dados(funcionarios, departamentos):
-    # Salvar dados de volta aos arquivos JSON
-    with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as arquivo_funcionarios:
-        json.dump(funcionarios, arquivo_funcionarios, indent=4)
-    with open('ADC/data/departamentos.json', 'w', encoding="utf-8") as arquivo_departamentos:
-        json.dump(departamentos, arquivo_departamentos, indent=4)
-
 def main():
+    """
+    Função principal que inicia o programa e gerencia o fluxo dos logins e dos menus.
+    O utilizador pode fazer login como admin, gestor ou funcionario e dependedo do seu papel é chamado o menu correspondente.
+    O utilizador pode sair do programa ou voltar ao menu de login.
+    Se o login não for bem-sucedido, o programa irá tentar novamente até que o utilizador faça login corretamente ou saia do programa.
+    """
     while True:
         funcionarios, departamentos = carregar_dados()
         
