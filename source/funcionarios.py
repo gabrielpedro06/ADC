@@ -2,22 +2,23 @@ import json
 
 class Funcionario:
     def __init__(self, dados):
-        self.id = dados["id"]
-        self.id_departamento = dados["id_departamento"]
-        self.funcao = dados["funcao"]
-        self.nome = dados["nome"]
-        self.morada = dados["morada"]
-        self.telemovel = dados["telemovel"]
-        self.nif = dados["nif"]
-        self.sexo = dados["sexo"]
-        self.iban = dados["iban"]
-        self.doencas = dados["doencas"]
-        self.ferias = dados["ferias"]
-        self.faltas = dados["faltas"]
-        self.salario = dados["salario"]
-        self.horario = dados["horario"]
-        self.folgas = dados["folgas"]
-        self.password = dados["password"]  # Novo campo para a password
+        self._id = dados["_id"]
+        self._id_departamento = dados["_id_departamento"]
+        self._funcao = dados["_funcao"]
+        self._nome = dados["_nome"]
+        self._morada = dados["_morada"]
+        self._telemovel = dados["_telemovel"]
+        self._nif = dados["_nif"]
+        self._sexo = dados["_sexo"]
+        self._iban = dados["_iban"]
+        self._doencas = dados["_doencas"]
+        self._ferias = dados["_ferias"]
+        self._ferias_status = dados.get("_ferias_status", None)
+        self._faltas = dados["_faltas"]
+        self._salario = dados["_salario"]
+        self._horario = dados["_horario"]
+        self._folgas = dados["_folgas"]
+        self._password = dados["_password"]
 
     def __str__(self):
         return f"""Funcionário {self.nome} (ID: {self.id}) - Departamento: {self.id_departamento} - Função {self.funcao}\nMorada: {self.morada} - Telemóvel: {self.telemovel}
@@ -81,6 +82,11 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
     def ferias(self): return self._ferias
     @ferias.setter
     def ferias(self, value): self._ferias = value
+    
+    @property
+    def ferias_status(self): return self._ferias_status
+    @ferias_status.setter
+    def ferias_status(self, value): self._ferias_status = value
         
     @property
     def faltas(self): return self._faltas
@@ -106,7 +112,7 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
     def password(self): return self._password
     @password.setter
     def password(self, value): self._password = value
-
+    
     # ----------- FUNÇÕES -----------    
     def colocar_funcionario(self):
         try:
@@ -116,22 +122,23 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
             funcionarios = []
 
         funcionario = {
-            "id": self._id,
-            "id_departamento": self._id_departamento,
-            "funcao": self._funcao,
-            "nome": self._nome,
-            "morada": self._morada,
-            "telemovel": self._telemovel,
-            "nif": self._nif,
-            "sexo": self._sexo, 
-            "iban": self._iban,
-            "doencas": self._doencas,
-            "ferias": self._ferias,
-            "faltas": self._faltas,
-            "salario": self._salario,
-            "horario": self._horario,
-            "folgas": self._folgas,
-            "password": self._password  # Adiciona a password ao objeto
+            "_id": self._id,
+            "_id_departamento": self._id_departamento,
+            "_funcao": self._funcao,
+            "_nome": self._nome,
+            "_morada": self._morada,
+            "_telemovel": self._telemovel,
+            "_nif": self._nif,
+            "_sexo": self._sexo, 
+            "_iban": self._iban,
+            "_doencas": self._doencas,
+            "_ferias": self._ferias,
+            "_ferias_status": self._ferias_status,  # Adiciona o atributo ferias_status
+            "_faltas": self._faltas,
+            "_salario": self._salario,
+            "_horario": self._horario,
+            "_folgas": self._folgas,
+            "_password": self._password  # Adiciona a password ao objeto
         }
         funcionarios.append(funcionario)
 
@@ -143,7 +150,6 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
     def editar_dados(self):
         print("Editar Dados Pessoais")
         
-        self._funcao = input(f"Função (atual: {self._funcao}): ") or self._funcao
         self._nome = input(f"Nome (atual: {self._nome}): ") or self._nome
         self._morada = input(f"Morada (atual: {self._morada}): ") or self._morada
         self._telemovel = input(f"Telemóvel (atual: {self._telemovel}): ") or self._telemovel
@@ -151,41 +157,12 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         self._sexo = input(f"Sexo (atual: {self._sexo}): ") or self._sexo
         self._iban = input(f"IBAN (atual: {self._iban}): ") or self._iban
         self._doencas = input(f"Doenças (atual: {self._doencas}): ") or self._doencas
-
-        try:
-            ferias_input = input(f"Férias (atual: {self._ferias}): ")
-            self._ferias = int(ferias_input) if ferias_input else self._ferias
-        except ValueError:
-            print("Valor inválido para férias. Mantido valor anterior.")
-        
-        try:
-            justificadas = input(f"Faltas justificadas (atual: {self._faltas['justificadas']}): ")
-            injustificadas = input(f"Faltas injustificadas (atual: {self._faltas['injustificadas']}): ")
-            self._faltas = {
-                "justificadas": int(justificadas) if justificadas else self._faltas['justificadas'],
-                "injustificadas": int(injustificadas) if injustificadas else self._faltas['injustificadas']
-            }
-        except ValueError:
-            print("Valor inválido para faltas. Mantido valor anterior.")
-
-        try:
-            salario_input = input(f"Salário (atual: {self._salario}): ")
-            self._salario = int(salario_input) if salario_input else self._salario
-        except ValueError:
-            print("Valor inválido para salário. Mantido valor anterior.")
-        
-        self._horario = input(f"Horário (atual: {self._horario}): ") or self._horario
-
-        folgas_input = input(f"Folgas (atual: {', '.join(self._folgas)} - separa por vírgulas): ")
-        if folgas_input:
-            self._folgas = [f.strip().capitalize() for f in folgas_input.split(",") if f.strip()]
         
         password_input = input("Alterar palavra-passe (deixe em branco para manter a atual): ")
         if password_input:
             self._password = password_input
 
         self.guardar_alteracoes()
-
 
     def guardar_alteracoes(self):
         try:
@@ -196,24 +173,25 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
             return
 
         for i, f in enumerate(funcionarios):
-            if f["id"] == self._id:
+            if f["_id"] == self._id:
                 funcionarios[i] = {
-                    "id": self._id,
-                    "id_departamento": self._id_departamento,
-                    "funcao": self._funcao,
-                    "nome": self._nome,
-                    "morada": self._morada,
-                    "telemovel": self._telemovel,
-                    "nif": self._nif,
-                    "sexo": self._sexo,
-                    "iban": self._iban,
-                    "doencas": self._doencas,
-                    "ferias": self._ferias,
-                    "faltas": self._faltas,
-                    "salario": self._salario,
-                    "horario": self._horario,
-                    "folgas": self._folgas,
-                    "password": self._password  # Atualiza a password
+                    "_id": self._id,
+                    "_id_departamento": self._id_departamento,
+                    "_funcao": self._funcao,
+                    "_nome": self._nome,
+                    "_morada": self._morada,
+                    "_telemovel": self._telemovel,
+                    "_nif": self._nif,
+                    "_sexo": self._sexo,
+                    "_iban": self._iban,
+                    "_doencas": self._doencas,
+                    "_ferias": self._ferias,
+                    "_ferias_status": self._ferias_status,  # Atualiza o status das férias
+                    "_faltas": self._faltas,
+                    "_salario": self._salario,
+                    "_horario": self._horario,
+                    "_folgas": self._folgas,
+                    "_password": self._password
                 }
                 break
 
@@ -235,6 +213,7 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         IBAN: {self._iban}
         Doenças: {self._doencas}
         Férias: {self._ferias} dias
+        Férias em Aprovação: {self._ferias_status} dias
         Faltas: Justificadas: {self._faltas['justificadas']} Injustificadas: {self._faltas['injustificadas']}
         Salário: {self._salario}€
         Horário: {self._horario}
@@ -243,7 +222,8 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
         print(perfil)
 
     def consultar_ferias(self):
-        print(f"Férias disponíveis: {self._ferias} dias")
+        status_ferias = self._ferias_status if self._ferias_status else "Não solicitado"
+        print(f"Férias disponíveis: {self._ferias} dias. Por Aprovação: {status_ferias}")
 
     def consultar_faltas(self):
         print(f"Faltas justificadas: {self._faltas['justificadas']}, Injustificadas: {self._faltas['injustificadas']}")
@@ -286,9 +266,50 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
             print("Ficheiro não encontrado.")
             return
 
-        funcionarios = [f for f in funcionarios if f["id"] != self._id]
+        funcionarios = [f for f in funcionarios if f["_id"] != self._id]
 
         with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
             json.dump(funcionarios, f, indent=4)
 
         print(f"Funcionário {self._id} removido com sucesso.")
+
+    def carregar_funcionarios(self):
+        # Carregar o arquivo de funcionários
+        with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
+            funcionarios_data = json.load(f)
+        
+        # Criar uma lista de instâncias de Funcionario a partir dos dados
+        funcionarios = [Funcionario(func) for func in funcionarios_data]
+        
+        return funcionarios
+
+
+    def pedir_ferias(self):
+        if self.ferias == 0:
+            print("Você não tem dias de férias disponíveis.")
+            return
+
+        print(f"Tem {self.ferias} dias de férias por gozar.")
+        dias_pedido = input("Deseja gozar quantos dias? ")
+
+        try:
+            dias_pedido = int(dias_pedido)
+            if dias_pedido > self.ferias:
+                print("Você não tem férias suficientes para esse pedido.")
+            else:
+                self.ferias_status = dias_pedido
+                print(f"Aguardando aprovação para {dias_pedido} dias de férias.")
+
+                # Atualizar o estado de férias do funcionário no arquivo JSON
+                funcionarios = self.carregar_funcionarios()
+                for func in funcionarios:
+                    if func.id == self.id:  # Aqui 'func' agora é uma instância de Funcionario
+                        func.ferias_status = dias_pedido  # Atualizar ferias_status com os dias pedidos
+
+                # Salvar as alterações no arquivo
+                funcionarios_data = [f.__dict__ for f in funcionarios]  # Convertendo objetos de volta para dicionários
+                with open('ADC/data/funcionarios.json', 'w', encoding="utf-8") as f:
+                    json.dump(funcionarios_data, f, indent=4)
+        except ValueError:
+            print("Insira um número válido de dias.")
+

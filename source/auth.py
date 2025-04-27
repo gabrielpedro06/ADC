@@ -13,34 +13,35 @@ def login(funcionarios):
         exit()  # Encerra o programa
 
     if role not in ['admin', 'gestor', 'funcionario']:
-        print("Função inválida!")
+        print("Função inválida! Tente novamente.")
         return None, None
     
     try:
         user_id = int(input("ID de Utilizador: "))
     except ValueError:
-        print("ID inválido!")
+        print("ID inválido! Tente novamente.")
         return None, None
     
-    # Coloca a role igual ao guardado no arquivo JSON
-    if role == 'funcionario': 
-        role = "Funcionário"
-    elif role == 'gestor':
-        role = "Gestor"
-    elif role == 'admin':
-        role = "Admin"
+    # Corrigir os nomes das funções para corresponder aos dados no JSON
+    role_map = {
+        'funcionario': 'Funcionário',
+        'gestor': 'Gestor',
+        'admin': 'Admin'
+    }
+    role = role_map.get(role, role)
     
     try:
-        # Verificar os utilizadores no arquivo
+        # Verificar os utilizadores no arquivo JSON
         with open('ADC/data/funcionarios.json', 'r', encoding="utf-8") as f:
             funcionarios = json.load(f)
         
         for funcionario in funcionarios:
-            if funcionario["id"] == user_id and funcionario["funcao"] == role:
+            # Alterar "id" para "_id"
+            if funcionario.get("_id") == user_id and funcionario.get("_funcao") == role:
                 # Usar getpass para capturar a palavra-passe de forma segura
                 password_input = getpass.getpass("Insira a sua palavra-passe: ")
-                if funcionario.get('password') == password_input:
-                    print(f"Login bem-sucedido! Bem-vindo(a), {funcionario['nome']}.\n")
+                if funcionario.get('_password') == password_input:
+                    print(f"Login bem-sucedido! Bem-vindo(a), {funcionario['_nome']}.\n")
                     return user_id, role
                 else:
                     print("Senha inválida!")
