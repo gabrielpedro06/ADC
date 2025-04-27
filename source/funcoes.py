@@ -95,13 +95,8 @@ def criar_funcionario():
             sexo = sexo.upper()
             break
         except ValueError as e:
-<<<<<<< HEAD
-             print(e)
-=======
+
             print(e)
->>>>>>> ferias_teste
-
-
     while True:
         try:
             iban = input("Insira o IBAN (sem PT50): ")
@@ -130,23 +125,13 @@ def criar_funcionario():
         except ValueError as e:
             print(e)
 
-<<<<<<< HEAD
-    
-
-=======
->>>>>>> ferias_teste
     while True:
         try:
             horario = input("Insira o horário (formato hora_início,hora_fim, ex: 10,18): ")
             horario = validar_horario(horario)
             break
         except ValueError as e:
-<<<<<<< HEAD
-         print(e)
-             
-=======
             print(e)
->>>>>>> ferias_teste
 
     while True:
         try:
@@ -246,19 +231,6 @@ def editar_funcionario():
 
     print("Deixa em branco para manter o valor atual.")
 
-<<<<<<< HEAD
-    nome = input_valido("Nome", funcionario['nome'], tipo="str", max_len=100)
-    morada = input_valido("Morada", funcionario['morada'], tipo="str", max_len=150)
-    telemovel = input_valido("Telemóvel", funcionario['telemovel'], tipo="int", numero_digitos=9)
-    nif = input_valido("NIF", funcionario['nif'], tipo="int", numero_digitos=9)
-    sexo = input_valido("Sexo (M/F)", funcionario['sexo'], validar_func=validar_sexo)
-    iban = input_valido("IBAN", funcionario['iban'], validar_func=test_iban)
-    doencas = input_valido("Doenças", funcionario['doencas'], tipo="str", max_len=200)
-    ferias = input_valido("Férias (dias)", funcionario['ferias'], tipo="int")
-    salario = input_valido("Salário", funcionario['salario'], tipo="float")
-    horario = input_valido("Horário (ex: 10,18)", funcionario['horario'], validar_func=validar_horario)
-    folgas = input_valido("Folgas", funcionario['folgas'], validar_func=validar_folgas)
-=======
     nome = input_valido("Nome", funcionario['_nome'], tipo="str", max_len=100)
     morada = input_valido("Morada", funcionario['_morada'], tipo="str", max_len=150)
     telemovel = input_valido("Telemóvel", funcionario['_telemovel'], tipo="int", numero_digitos=9)
@@ -271,7 +243,6 @@ def editar_funcionario():
     horario = input_valido("Horário (ex: 10,18)", funcionario['_horario'], validar_func=validar_horario)
     folgas = input_valido("Folgas", funcionario['_folgas'], validar_func=validar_folgas)
     ferias_status = "Em férias" if ferias > 0 else "Sem férias"
->>>>>>> ferias_teste
 
     funcionario.update({
         '_nome': nome,
