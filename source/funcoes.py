@@ -505,7 +505,7 @@ def atribuir_gestor_departamento(id_departamento):
 
                     for departamento in departamentos:
                         if departamento['_id'] == id_departamento:
-                            departamento['_gestor'] = id_gestor  # Atribui o id do gestor ao departamento
+                            departamento['_gestor'] = nome_funcionario  # Atribui o nome do gestor ao departamento
                             departamento_nome = departamento['_nome']  # Guarda o nome do departamento
                             break
                         
