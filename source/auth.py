@@ -2,6 +2,12 @@ import json
 import getpass
 
 def login(funcionarios):
+    """
+    Função de autenticação do utilizador.
+    Permite o login de utilizadores de acordo com a sua função.
+    Se a sua função e o id forem válidos, é pedida a palavra-passe ao utilziador.
+    Se a palavra-passe estiver correta o utilizador é autenticado e devolve o id e a função do utilizador para serem mostradas nos menus.
+    """
     # Pedir ID de utilizador e função
     print("======== BEM-VINDO AOS RECURSOS-HUMANOS! ========")
     print("LOGIN: ")
