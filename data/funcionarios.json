@@ -311,5 +311,30 @@
             "Domingo"
         ],
         "password": "123"
+    },
+    {
+        "id": 14,
+        "id_departamento": 2,
+        "funcao": "Funcionário",
+        "nome": "Mario",
+        "morada": "Morada,5",
+        "telemovel": "123445555",
+        "nif": "111111122",
+        "sexo": "M",
+        "iban": "PT50121212121212121212121",
+        "doencas": [
+            "Nenhuma"
+        ],
+        "ferias": 43,
+        "faltas": {
+            "justificadas": 0,
+            "injustificadas": 0
+        },
+        "salario": "11111€",
+        "horario": "10h-21h",
+        "folgas": [
+            "Segunda"
+        ],
+        "password": "123"
     }
 ]
