@@ -1,4 +1,9 @@
 class Departamento:
+    """
+    Classe que representa um departamento dentro de uma empresa.
+    A classe tem atributos como id, nome, gestor e uma lista de funcionários.
+    Contem 3 métodos, um para atribuir um funcionário ao departamento, outro para remover e outro para listar os funcionários do departamento.
+    """
     def __init__(self, dados):
         self.id = dados["id"]
         self.nome = dados["nome"]
@@ -33,14 +38,25 @@ class Departamento:
         self._gestor = value
     
     def atribuir_funcionario(self, funcionario_id):
+        """
+        Atribui um funcionário ao departamento, se ele ainda não estiver atribuido.
+        """
         if funcionario_id not in self.funcionarios:
             self.funcionarios.append(funcionario_id)
     
     def remover_funcionario(self, funcionario_id):
+        """
+        Procura se o funcionário existe no departamento e remove-o se existir.
+        """
         if funcionario_id in self.funcionarios:
             self.funcionarios.remove(funcionario_id)
     
     def listar_funcionarios(self, lista_funcionarios=None):
+        """
+        Lista os funcionários do departamento.
+        Se a lista de funcionários for encontrada, imprime os detalhes dos funcionários.
+        Caso contrário, imprime apenas os IDs dos funcionários.
+        """
         print(f"Funcionários do Departamento {self.nome}:")
         if lista_funcionarios:
             for f_id in self.funcionarios:
