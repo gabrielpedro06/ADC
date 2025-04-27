@@ -234,13 +234,6 @@ Férias: {self.ferias} dias - Faltas: {self.faltas} - Horário: {self.horario} -
     def consultar_folgas(self):
         print(f"Folgas: {', '.join(self._folgas)}")
 
-    def pedir_ferias(self, dias):
-        if dias <= self._ferias:
-            self._ferias -= dias
-            print(f"{dias} dias de férias aprovados. Férias restantes: {self._ferias}")
-        else:
-            print("Não tem dias suficientes de férias.")
-
     def registar_falta(self, justificada=True):
         tipo = "justificadas" if justificada else "injustificadas"
         self._faltas[tipo] += 1

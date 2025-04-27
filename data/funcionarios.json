@@ -162,7 +162,7 @@
         "_sexo": "Feminino",
         "_iban": "PT50000201231234567890123",
         "_doencas": [],
-        "_ferias": 15,
+        "_ferias": 11,
         "_ferias_status": null,
         "_faltas": {
             "justificadas": 0,
@@ -262,7 +262,7 @@
         "_sexo": "Masculino",
         "_iban": "PT50123456789012345678901",
         "_doencas": "Renite,Sinusite",
-        "_ferias": 10,
+        "_ferias": 12,
         "_ferias_status": 2,
         "_faltas": {
             "justificadas": 0,
@@ -291,7 +291,7 @@
             "Renite"
         ],
         "_ferias": 22,
-        "_ferias_status": "Em f\u00e9rias",
+        "_ferias_status": null,
         "_faltas": {
             "justificadas": 0,
             "injustificadas": 0

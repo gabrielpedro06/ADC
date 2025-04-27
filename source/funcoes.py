@@ -242,7 +242,6 @@ def editar_funcionario():
     salario = input_valido("Salário", funcionario['_salario'], tipo="float")
     horario = input_valido("Horário (ex: 10,18)", funcionario['_horario'], validar_func=validar_horario)
     folgas = input_valido("Folgas", funcionario['_folgas'], validar_func=validar_folgas)
-    ferias_status = "Em férias" if ferias > 0 else "Sem férias"
 
     funcionario.update({
         '_nome': nome,
@@ -253,7 +252,6 @@ def editar_funcionario():
         '_iban': iban,
         '_doencas': doencas,
         '_ferias': ferias,
-        '_ferias_status': ferias_status,  # Atualizar o ferias_status
         '_salario': salario,
         '_horario': horario,
         '_folgas': folgas

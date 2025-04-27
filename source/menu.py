@@ -19,9 +19,9 @@ def menu_admin():
         print("|  5 - Rever Férias Func.    |")
         print("|  6 - Criar Departamento    |")
         print("|  7 - Editar Departamento   |")
-        print("|  8 - Listar Departamento   |")
+        print("|  8 - Listar Departamentos  |")
         print("|  9 - Remover Departamento  |")
-        print("|  10 - Sair                  |")
+        print("|  10 - Sair                 |")
         opcao = input("Escolha uma opção: ")
         
         if opcao == "1":
